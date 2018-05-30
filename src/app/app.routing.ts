@@ -12,6 +12,7 @@ import { MapsComponent } from "./maps/maps.component";
 import { NotificationsComponent } from "./notifications/notifications.component";
 import { UpgradeComponent } from "./upgrade/upgrade.component";
 import { SharepriceComponent } from "./shareprice/shareprice.component";
+import {CpuComponent} from './cpu/cpu.component';
 /* 
 here defined routes and unwanted are commented
 */
@@ -19,6 +20,7 @@ here defined routes and unwanted are commented
 const routes: Routes = [
   { path: "dashboard", component: HomeComponent },
   { path: "join", component: JoinComponent },
+  { path: "cpu", component: CpuComponent },
   { path: "user", component: UserComponent },
   { path: "table", component: TablesComponent },
   { path: "shareprice", component: SharepriceComponent },

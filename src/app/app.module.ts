@@ -22,6 +22,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { UpgradeComponent } from './upgrade/upgrade.component';
 import { JoinComponent } from './join/join.component';
 import { SharepriceComponent } from './shareprice/shareprice.component';
+import { CpuComponent } from './cpu/cpu.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SharepriceComponent } from './shareprice/shareprice.component';
     NotificationsComponent,
     UpgradeComponent,
     JoinComponent,
-    SharepriceComponent
+    SharepriceComponent,
+    CpuComponent
 
   ],
   imports: [
