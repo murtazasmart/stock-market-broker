@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SLR } from 'ml-regression';
 
-import * as csv from 'csvtojson';
+// import * as csv from 'csvtojson';
 import * as ml from 'ml-regression';
 // import { CSVDATA } from '../cpu/Advertising.csv';
 
@@ -1423,7 +1423,7 @@ export class CpuComponent implements OnInit {
   private regressionModel;
 
   constructor() {
-    console.log("CONSTRUCTOR" + csv);
+    // console.log("CONSTRUCTOR" + csv);
     // csv().fromFile('Advertising.csv').on('json', (jsonObj) => {
     //   console.log("CSV READING");
     //   this.csvData.push(jsonObj);
@@ -1451,7 +1451,7 @@ export class CpuComponent implements OnInit {
      * we need to parse the String value as a Float.
      */
     this.csvData.forEach((row) => {
-      console.log("RADIO "+row.radio+" SALES "+row.sales);
+      console.log("RADIO " + row.radio + " SALES " + row.sales);
       this.X.push(this.f(row.radio));
       this.y.push(this.f(row.sales));
     });
@@ -1468,11 +1468,14 @@ export class CpuComponent implements OnInit {
   }
 
   predictOutput() {
-    console.log('OUTPUT');
-    // CpuComponent.rl.question('Enter input X for prediction (Press CTRL+C to exit) : ', (answer) => {
-    //   console.log(`At X = ${answer}, y =  ${CpuComponent.regressionModel.predict(parseFloat(answer))}`);
-    //   this.predictOutput();
-    // });
+    var person = prompt("Please Enter Your Prediction", "");
+    if (person == null || person == "") {
+      alert("Please Enter a valid Amount");
+      this.predictOutput();
+    } else {
+      alert("Predicted Result " + this.regressionModel.predict(parseFloat(person)));
+      this.predictOutput();
+    }
   }
 
   ngOnInit() {
