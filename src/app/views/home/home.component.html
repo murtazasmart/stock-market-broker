@@ -1,183 +1,91 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
-                <lbd-chart
-                  [title]="'Email Statistics'"
-                  [subtitle]="'Last Campaign Performance'"
-                  [chartClass]="'ct-perfect-fourth'"
-                  [chartType]="emailChartType"
-                  [chartData]="emailChartData"
-                  [legendItems]="emailChartLegendItems"
-                  [withHr]="true"
-                  [footerIconClass]="'fa fa-clock-o'"
-                  [footerText]="'Campaign sent 2 days ago'">
-                </lbd-chart>
-            </div>
-            <div class="col-md-8">
-                <lbd-chart
-                  [title]="'Users Behavior'"
-                  [subtitle]="'24 Hours performance'"
-                  [chartType]="hoursChartType"
-                  [chartData]="hoursChartData"
-                  [chartOptions]="hoursChartOptions"
-                  [chartResponsive]="hoursChartResponsive"
-                  [legendItems]="hoursChartLegendItems"
-                  [withHr]="true"
-                  [footerIconClass]="'fa fa-history'"
-                  [footerText]="'Updated 3 minutes ago'">
-                </lbd-chart>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
-                <lbd-chart
-                  [title]="'2014 Sales'"
-                  [subtitle]="'All products including Taxes'"
-                  [chartType]="activityChartType"
-                  [chartData]="activityChartData"
-                  [chartOptions]="activityChartOptions"
-                  [chartResponsive]="activityChartResponsive"
-                  [legendItems]="activityChartLegendItems"
-                  [withHr]="true"
-                  [footerIconClass]="'fa fa-check'"
-                  [footerText]="'Data information certified'">
-                </lbd-chart>
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Analyst Suggesions</h4>
+                        <p class="category">Here are the recommendations</p>
+                    </div>
+                    <div *ngIf="rowData" class="content table-responsive table-full-width" style="max-height: 500px; overflow: auto;">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>
+                                </tr>
+                            </thead>
+                            <tbody style="height: 500px; overflow: auto;">
+                                <tr *ngFor="let row of tableData1.dataRows">
+                                    <td>{{row.action}}</td>
+                                    <td>{{row.duration}}</td>
+                                    <td>{{row.name}}</td>
+                                    <td>{{row.rectime}}</td>
+                                    <td>{{row.type}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
             </div>
             <div class="col-md-6">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Tasks</h4>
-                        <p class="category">Backend development</p>
+                        <h4 class="title">Company Stock Prices</h4>
+                        <p class="category">Current Round: {{currentRound}}</p>
                     </div>
-                    <div class="content">
-                        <div class="table-full-width">
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="checkbox">
-                                                <input id="checkbox1" type="checkbox">
-                                                <label for="checkbox1">
+                    <div *ngIf="rowData2" class="content table-responsive table-full-width">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
+                                </tr>
+                            </thead>
+                            <tbody style="height: 500px; overflow: auto;">
+                                <tr *ngFor="let row of tableData2.dataRows">
+                                    <td>{{row.company}}</td>
+                                    <td>{{row.sector}}</td>
+                                    <td>{{row.price}}</td>
+                                    <td>
+                                        <button (click)="buyShare(row.price)" class="btn btn-success btn-xs">Buy</button>
+                                    </td>
+                                    <!-- <td ><button class="btn btn-warning btn-xs">Sell</button></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
 
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="checkbox">
-                                                <input id="checkbox2" type="checkbox" checked>
-                                                <label for="checkbox2">
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="checkbox">
-                                                <input id="checkbox3" type="checkbox" checked>
-                                                <label for="checkbox3">
 
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                        </td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="checkbox">
-                                                <input id="checkbox4" type="checkbox">
-                                                <label for="checkbox4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">My Stock Prices</h4>
+                        <p class="category">Current Round: {{currentRound}}</p>
+                    </div>
+                    <div *ngIf="rowData2" class="content table-responsive table-full-width">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
+                                </tr>
+                            </thead>
+                            <tbody style="height: 500px; overflow: auto;">
+                                <tr *ngFor="let row of tableData2.dataRows">
+                                    <td>{{row.company}}</td>
+                                    <td>{{row.sector}}</td>
+                                    <td>{{row.price}}</td>
+                                    
+                                    <td ><button class="btn btn-warning btn-xs">Sell</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="checkbox">
-                                                <input id="checkbox5" type="checkbox" >
-                                                <label for="checkbox5">
-
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Read "Following makes Medium better"</td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="checkbox">
-                                                <input id="checkbox6" type="checkbox">
-                                                <label for="checkbox6">
-
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Unfollow 5 enemies from twitter</td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="footer">
-                            <hr>
-                            <div class="stats">
-                                <i class="fa fa-history"></i> Updated 3 minutes ago
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
