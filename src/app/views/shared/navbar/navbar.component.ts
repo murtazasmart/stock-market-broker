@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {Router, ActivatedRoute} from '@angular/router';
+import {JoinServiceService} from '../../../services/join-service.service';
 
 @Component({
     // moduleId: module.id,
@@ -15,7 +16,7 @@ export class NavbarComponent implements OnInit{
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
+    constructor(location: Location,  private element: ElementRef, private router: Router,private joinService: JoinServiceService) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -65,6 +66,7 @@ export class NavbarComponent implements OnInit{
     //////////////////////////////////////////////////////////////////////
 
     logOut() {
+        this.joinService.endGame();
         localStorage.setItem("userData", JSON.stringify({isLoggedIn: false}));
         this
           .router

@@ -21,7 +21,15 @@ export class JoinComponent implements OnInit {
 
   async login() {
     try {
-     await this.joinService.logIn(this.playerName);   
+     await this.joinService.loggin(this.playerName);  
+     this.playerName=' '; 
+    } catch (error) {
+      alert(error);
+    }
+  }
+  async start() {
+    try {
+     await this.joinService.startGame();  
     } catch (error) {
       alert(error);
     }
