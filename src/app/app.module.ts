@@ -23,6 +23,7 @@ import { UpgradeComponent } from './upgrade/upgrade.component';
 import { JoinComponent } from './join/join.component';
 import { SharepriceComponent } from './shareprice/shareprice.component';
 import { CpuComponent } from './cpu/cpu.component';
+import { CpuPlayerService } from './services/cpu-player.service'
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { CpuComponent } from './cpu/cpu.component';
     UpgradeComponent,
     JoinComponent,
     SharepriceComponent,
-    CpuComponent
+    CpuComponent,
 
   ],
   imports: [
@@ -51,7 +52,7 @@ import { CpuComponent } from './cpu/cpu.component';
     AppRoutingModule,
     LbdModule
   ],
-  providers: [],
+  providers: [CpuPlayerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

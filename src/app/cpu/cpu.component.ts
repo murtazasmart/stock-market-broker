@@ -67,8 +67,8 @@ export class CpuComponent implements OnInit {
     "sector": "Business"
   }];
 
-  constructor() {
-    // private route: ActivatedRoute, private router: Router, private http: Http, private cpuService: CpuPlayerService
+  constructor(private route: ActivatedRoute, private router: Router, private http: Http, private cpuService: CpuPlayerService) {
+
     // var synaptic = require('synaptic');
     // var Neuron = synaptic.Neuron,
     // Layer = synaptic.Layer,
@@ -88,32 +88,24 @@ export class CpuComponent implements OnInit {
     //   this.dressData(); // To get data points from JSON Objects
     //   this.performRegression();
     // });
-    // this.dressData();
-    // this.performRegression();
-    // this.http.get(`http://swapi.co/api/people/1`).map((response: Response) => {
-    //   console.log(response.json());
-    //   response.json();
-    // }).subscribe();
-
-    // this.http.get(`https://stock-market-simulator.herokuapp.com/api/v1/game/turn/5b11abb11835324dd8bc1156`).
-    //   map(res => res.json()).
-    //   subscribe(data => {
-    //     console.log("sample sample" + JSON.stringify(data));
-    //   });
-
-    // this.http.get(`https://stock-market-simulator.herokuapp.com/api/v1/game/turn/5b11abb11835324dd8bc1156`).
-    //   map(res => res.json()).
-    //   subscribe(data => {
-    //     console.log("sample sample" + JSON.stringify(data));
-    //   });
+    this.dressData();
+    this.performRegression();
+    this.getSectorWiseData();
   }
 
-  async login() {
+  async getSectorWiseData() {
     try {
       console.log("LOGIN ACCESSED");
-      // await this.cpuService.getData();
-      //  await this.joinService.loggin(this.playerName);  
-      //  this.playerName=' '; 
+      await this.cpuService.getData();
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  async getCompanyWiseData() {
+    try {
+      console.log("LOGIN ACCESSED");
+      await this.cpuService.getData();
     } catch (error) {
       alert(error);
     }
