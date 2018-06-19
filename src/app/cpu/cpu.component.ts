@@ -88,15 +88,15 @@ export class CpuComponent implements OnInit {
     //   this.dressData(); // To get data points from JSON Objects
     //   this.performRegression();
     // });
-    this.dressData();
-    this.performRegression();
+    // this.dressData();
     this.getSectorWiseData();
+    this.getCompanyWiseData();
   }
 
   async getSectorWiseData() {
     try {
       console.log("LOGIN ACCESSED");
-      await this.cpuService.getData();
+      let xxx = await this.cpuService.getData();
     } catch (error) {
       alert(error);
     }
@@ -104,14 +104,17 @@ export class CpuComponent implements OnInit {
 
   async getCompanyWiseData() {
     try {
-      console.log("LOGIN ACCESSED");
-      await this.cpuService.getData();
+      console.log("Get Compny Wise Data");
+      let companyWiseDataArray = await this.cpuService.getCompanyWiseHistory('99X');
+      this.dressData(companyWiseDataArray);
+      this.performRegression();
+      console.log(companyWiseDataArray);
     } catch (error) {
       alert(error);
     }
   }
 
-  dressData() {
+  dressData(arrayOfData) {
     /**
      * One row of the data object looks like:
      * {
@@ -129,12 +132,12 @@ export class CpuComponent implements OnInit {
     //   this.X.push(this.f(row.radio));
     //   this.y.push(this.f(row.sales));
     // });
-    this.roundData.forEach((row) => {
+    arrayOfData.forEach((row) => {
       // console.log("RADIO " + row.radio + " SALES " + row.sales);
-      switch (row.company) {
-        case '99x':
-          this.TechnologyX.push(this.f(row.company));
-          this.Technologyy.push(this.f(row.price));
+      switch (row.companyName) {
+        case '99X':
+          this.TechnologyX.push(this.f(row.round));
+          this.Technologyy.push(this.f(row.stockPrice));
       }
 
     });
@@ -147,20 +150,21 @@ export class CpuComponent implements OnInit {
   performRegression() {
     this.regressionModel = new SLR(this.TechnologyX, this.Technologyy); // Train the model on training data
     // console.log("TEST_STOCK" + this.regressionModel.toString(5));
-    console.log("TEST_STOCK" + this.regressionModel.toString(5));
+    // console.log("TEST_STOCK" + this.regressionModel.toString(5));
     this.playHand();
 
   }
 
   predictOutput() {
-    var person = prompt("Please Enter Your Prediction", "");
-    if (person == null || person == "") {
-      alert("Please Enter a valid Amount");
-      this.predictOutput();
-    } else {
-      alert("Predicted Result " + this.regressionModel.predict(parseFloat(person)));
-      // this.predictOutput();
-    }
+    // this.regressionModel.predict(parseFloat(24))
+    // var person = prompt("Please Enter Your Prediction", "");
+    // if (person == null || person == "") {
+    //   alert("Please Enter a valid Amount");
+    //   this.predictOutput();
+    // } else {
+    alert("Predicted Result " + this.regressionModel.predict(parseFloat('400')));
+    //   // this.predictOutput();
+    // }
   }
 
   playHand() {
