@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
 
     this.tableData1 = {
       headerRow: [
-        'Action', 'Duration', 'Sector', 'Rec. Time', 'Type'
+        'Action', 'Duration', 'Sector',  'Type'
       ],
       dataRows: null
     };
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
 
       this.tableData1 = {
         headerRow: [
-          'Action', 'Duration', 'Sector', 'Rec. Time', 'Type'
+          'Action', 'Duration', 'Sector',  'Type'
         ],
         dataRows: this.rowData
       };
