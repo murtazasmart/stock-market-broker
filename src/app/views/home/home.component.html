@@ -3,22 +3,24 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="header">
-                        <h4 class="title" style="white-space: nowrap;">Analyst Suggesions</h4>
-                        <p class="category">Here are the recommendations</p>
+                    <div class="header" style="background-color: #44c5ac;
+    border-bottom: 2px solid #44c5ac;
+    border-radius: 5px;">
+                        <h4 class="title" style="white-space: nowrap; color: #fff">Analyst Suggesions</h4>
+                        <p class="category" style=" color: #fff">Here are the recommendations</p>
                     </div>
                     <div *ngIf="rowData" class="content table-responsive table-full-width" style="max-height: 500px; overflow: auto;">
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th *ngFor="let cell of tableData1.headerRow" style="font-weight: bold;color: #73879C;">{{ cell }}</th>
+                                    <th *ngFor="let cell of tableData1.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
                                 </tr>
                             </thead>
                             <tbody style="height: 500px; overflow: auto;">
                                 <tr *ngFor="let row of tableData1.dataRows">
-                                    <td>{{row.action}}</td>
+                                    <td style="color:#44c5ac">{{row.action}}</td>
                                     <td>{{row.duration}}</td>
-                                    <td>{{row.name}}</td>
+                                    <td style="color: #3f8e19; font-size: 10pt;">{{row.name}}</td>
                                     <!-- <td>{{row.rectime}}</td>-->
                                     <td>{{row.type}}</td>
                                 </tr>
@@ -31,24 +33,26 @@
             </div>
             <div class="col-md-6">
                 <div class="card">
-                    <div class="header">
-                        <h4 class="title">Company Stock Prices</h4>
-                        <p class="category">Current Round: {{currentRound}}</p>
+                    <div class="header" style="background-color: #F94C4C;
+    border-bottom: 2px solid #F94C4C;
+    border-radius: 5px;">
+                        <h4 class="title" style="color: #fff">Company Stock Prices</h4>
+                        <p class="category" style="color: #fff">Current Round: {{currentRound}}</p>
                     </div>
                     <div *ngIf="rowData2" class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th *ngFor="let cell of tableData2.headerRow" style="font-weight: bold;color: #73879C;">{{ cell }}</th>
+                                    <th *ngFor="let cell of tableData2.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
                                 </tr>
                             </thead>
                             <tbody style="height: 500px; overflow: auto;">
                                 <tr *ngFor="let row of tableData2.dataRows">
                                     <td>{{row.company}}</td>
                                     <td>{{row.sector}}</td>
-                                    <td>{{row.price}}</td>
+                                    <td style="color: #F94C4C; font-size: 14pt;">{{row.price}}</td>
                                     <td>
-                                        <button (click)="buyShare(row.price)" class="btn btn-success btn-xs">Buy</button>
+                                        <button (click)="buyShare(row.price)" class="btn btn-success btn-sm">Buy</button>
                                     </td>
                                     <!-- <td ><button class="btn btn-warning btn-xs">Sell</button></td> -->
                                 </tr>
@@ -64,15 +68,17 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="header">
-                        <h4 class="title">My Stock Prices</h4>
-                        <p class="category">Current Round: {{currentRound}}</p>
+                    <div class="header" style="background-color: #FFA500;
+    border-bottom: 2px solid #FFA500;
+    border-radius: 5px;">
+                        <h4 class="title" style="color: #fff">My Stock Prices</h4>
+                        <p class="category" style="color: #fff">Current Round: {{currentRound}}</p>
                     </div>
                     <div *ngIf="rowData2" class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
+                                    <th *ngFor="let cell of tableData2.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
                                 </tr>
                             </thead>
                             <tbody style="height: 500px; overflow: auto;">
