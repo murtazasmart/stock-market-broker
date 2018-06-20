@@ -134,7 +134,7 @@
         p{
             margin: 0;
             line-height: 30px;
-            font-size: 12px;
+            font-size:10pt;
             font-weight: 600;
             text-transform: uppercase;
             margin-left: 45px;
@@ -259,6 +259,7 @@
     .main-content{
         padding: 30px 15px;
         min-height: calc(100% - 123px);
+        //background: url(../../assets/img/background.jpg)
     }
 
     > .footer{

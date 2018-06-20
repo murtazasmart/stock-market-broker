@@ -1,8 +1,18 @@
 .card{
     border-radius: $border-radius-base;
     box-shadow: 0 1px 2px rgba(0,0,0,.0),0 0 0 1px rgba(0,0,0,0);
-    background-color: #FFFFFF;
+    background-color: rgba(255, 255, 255, 0.9);
     margin-bottom: 30px;
+    width: 100%;
+    padding: 10px 17px;
+    display: inline-block;
+    
+    border: 1px solid #E6E9ED;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
+    opacity: 1;
+    transition: all .2s ease;
         
     .image{
         width: 100%;
