@@ -8,7 +8,6 @@ import { UserComponent } from "./views/user/user.component";
 import { TablesComponent } from "./views/tables/tables.component";
 import { TypographyComponent } from "./views/typography/typography.component";
 import { IconsComponent } from "./icons/icons.component";
-import { MapsComponent } from "./views/maps/maps.component";
 import { NotificationsComponent } from "./views/notifications/notifications.component";
 import { UpgradeComponent } from "./views/upgrade/upgrade.component";
 import { SharepriceComponent } from "./views/shareprice/shareprice.component";
@@ -24,7 +23,6 @@ const routes: Routes = [
   { path: "shareprice", component: SharepriceComponent },
   { path: "typography", component: TypographyComponent },
   { path: "icons", component: IconsComponent },
-  { path: "maps", component: MapsComponent },
   { path: "notifications", component: NotificationsComponent },
   { path: "upgrade", component: UpgradeComponent },
   { path: "", redirectTo: "join", pathMatch: "full" }

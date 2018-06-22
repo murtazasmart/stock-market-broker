@@ -1,7 +1,8 @@
-export class Stock
-{
-    company : string;
-    price: number;
-    round: number;
-    sector: string;
+export class Stock {
+  constructor(
+      public company: string, 
+      public price: number, 
+      public round: number, 
+      public sector: string
+    ) {}
 }
