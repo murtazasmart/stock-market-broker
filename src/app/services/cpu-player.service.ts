@@ -154,4 +154,53 @@ export class CpuPlayerService {
     return ParentArray;
   }
 
+  public bankStartGame() {
+    return this
+      .http
+      .get('https://exithost.000webhostapp.com/bank/startgame')
+      .subscribe(response => {
+        const responseStart: any = response.json();
+        console.log('BANK STarted', responseStart);
+      });
+
+  }
+
+  public createNewBankAccount() {
+    let Data = [
+      { "Name": "CPU1" }
+    ];
+    return this
+      .http
+      .get('https://exithost.000webhostapp.com/bank/account')
+      .subscribe(response => {
+        // after game is reset
+        const responseStart: any = response.json();
+        console.log('stock Prices', responseStart);
+      });
+  }
+
+  public getAccountStatement(accountNumber) {
+    return this
+      .http
+      .get('https://exithost.000webhostapp.com/bank/account/')
+      .subscribe(response => {
+        // after game is reset
+        const responseStart: any = response.json();
+        console.log('stock Prices', responseStart);
+      });
+  }
+
+  public updateBankAccount() {
+
+    let data = [];
+    return this
+      .http
+      .post('https://exithost.000webhostapp.com/bank/transaction', data)
+      .subscribe(response => {
+        // after game is reset
+        const responseStart: any = response.json();
+        console.log('stock Prices', responseStart);
+      });
+  }
+
 }
