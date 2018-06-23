@@ -61,7 +61,8 @@ import {GameServiceService} from './services/game-service.service'
     TransactionsServiceService,
     BrokerServiceService,
     SimulatorServiceService,
-    GameServiceService
+    GameServiceService,
+    
   ],
   bootstrap: [AppComponent]
 })
