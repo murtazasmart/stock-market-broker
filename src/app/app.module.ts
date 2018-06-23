@@ -28,7 +28,7 @@ import {TransactionsServiceService} from './services/transactions-service.servic
 import {BrokerServiceService} from './services/broker-service.service';
 import {SimulatorServiceService} from './services/simulator-service.service'
 import {GameServiceService} from './services/game-service.service'
-
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +62,7 @@ import {GameServiceService} from './services/game-service.service'
     BrokerServiceService,
     SimulatorServiceService,
     GameServiceService,
+    {provide:LocationStrategy,useClass:HashLocationStrategy}
     
   ],
   bootstrap: [AppComponent]
