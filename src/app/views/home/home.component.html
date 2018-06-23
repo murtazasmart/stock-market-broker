@@ -54,10 +54,15 @@
                                     <td>{{row.company}}</td>
                                     <td>{{row.sector}}</td>
                                     <td style="color: #F94C4C; font-size: 14pt;">{{row.price}}</td>
-                                    <td>
+                                     <td>
+                                        
+                                        <button (click)="toggleShowBuy(row.price, row.company)" class="btn btn-success btn-sm">Buy</button>
+                                    </td>
+
+                                   <!-- <td>
                                         
                                         <button (click)="buyShare(row.price, row.company)" class="btn btn-success btn-sm">Buy</button>
-                                    </td>
+                                    </td>-->
                                     <!-- <td ><button class="btn btn-warning btn-xs">Sell</button></td> -->
                                 </tr>
                             </tbody>
@@ -91,10 +96,15 @@
                                 <tr *ngFor="let row of portfolio | async">
                                     <td>{{row.stock}}</td>
                                     <td>{{row.quantity}}</td>
-                                    <td>
+                                    <!--<td>
                                         
                                         <button (click)="sellShare(row.price, row.stock)" class="btn btn-danger btn-xs">Sell</button>
+                                    </td>-->
+                                    <td>
+                                        
+                                        <button (click)="toggleShowSell(row.price, row.stock, row.quantity)" class="btn btn-danger btn-sm">Sell</button>
                                     </td>
+
                                 </tr>
                             </tbody>
                         </table>
