@@ -1,9 +1,9 @@
-<div class="container-fluid" style=" background-image: url('./assets/img/loginImage.jpg')">
+<div class="container-fluid" style=" background-image: url('./assets/img/loginImage.jpg')" >
     <div class="row">
         <div class="mainjoin">
             <div class="card" style="width: 70%;">
                 <div class="header1">
-                    <h4 class="title">Please Join</h4>
+                    <h4 class="title">Please Join</h4> 
                 </div>
                 <div class="content">
                     <form class="form-signin" name="userform" method="post" #formCtrl="ngForm">
@@ -17,6 +17,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <app-spinner *ngIf="spinner"></app-spinner>
                                     <button class="btn btn-success" type="submit" (click)="login()" [disabled]="formCtrl.form.invalid">JOIN</button>
                                     <button class="btn btn-success" (click)="start()" [disabled]="filled">start Game</button>
                                     <button class="btn btn-danger" (click)="clear()" [disabled]="filled">Clear</button>

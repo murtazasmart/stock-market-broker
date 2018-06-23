@@ -26,7 +26,8 @@ export class HomeComponent implements OnInit {
   public tableData1: TableData;
   public tableData2: TableData;
   public tableData3: TableData;
-
+  spinnerbuy:boolean=false;
+  spinnersell:boolean=false;
   private currentUser: User = null;
   private rowData: Observable<Trend[]>;
   private userBalance: Observable<any>;
@@ -94,6 +95,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {}
 
   public buyShare(price: any, stock: string) {
+    this.spinnerbuy=true;
     const { accountNumber, Name } = this.currentUser;
 
     const stockPrice = this.simulatorServiceService.getCurrentStockPrices(stock);
@@ -101,25 +103,32 @@ export class HomeComponent implements OnInit {
     this.transactionsServiceService
       .transaction('debit', String(price), String(accountNumber), 'buying')
       .flatMap(response => {
+        this.spinnerbuy=true;
         return this.brokerServiceService.bTransaction(Name, stock, 1, 'buy', price, this.currentRound);
       })
       .subscribe(data => {
         console.log(data);
+        this.spinnerbuy=false;
         alert('you have succefully bought!');
+        
         this.uiChange();
       });
   }
 
   public sellShare(price: any, company: string) {
+    this.spinnersell=true;
     const { accountNumber, Name } = this.currentUser;
     this.brokerServiceService
       .bTransaction(Name, company, 1, 'sell', price, this.currentRound)
       .flatMap(response => {
+        this.spinnersell=false;
         return this.transactionsServiceService.transaction('credit', String(price), String(accountNumber), 'selling');
+        
       })
       .subscribe(data => {
         console.log(data);
         alert('you have succefully sell a stock!');
+        this.spinnersell=false;
         this.uiChange();
       });
   }

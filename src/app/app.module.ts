@@ -29,6 +29,7 @@ import {BrokerServiceService} from './services/broker-service.service';
 import {SimulatorServiceService} from './services/simulator-service.service'
 import {GameServiceService} from './services/game-service.service'
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import { SpinnerComponent } from './views/spinner/spinner.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +41,8 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
     NotificationsComponent,
     UpgradeComponent,
     JoinComponent,
-    SharepriceComponent
+    SharepriceComponent,
+    SpinnerComponent
 
   ],
   imports: [
