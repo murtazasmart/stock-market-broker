@@ -146,11 +146,11 @@ export class CpuPlayerService {
       "23": 122
     },];
 
-    let sample: {
-      company: '',
-      round: '',
-      stockprice: '',
-    }
+    // let sample: {
+    //   company: '',
+    //   round: '',
+    //   stockprice: '',
+    // }
 
     let ParentArray = [];
 
