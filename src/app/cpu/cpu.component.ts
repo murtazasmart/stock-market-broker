@@ -35,6 +35,26 @@ export class CpuComponent implements OnInit {
   private TechnologyX = [];
   private Technologyy = [];
   private regressionModel;
+  private sectorArray = [];
+  private techCompanyArray = [];
+  private bizCompanyArray = [];
+  private techCompany1 = [];
+  private techCompany2 = [];
+  private techCompany3 = [];
+  private techCompany4 = [];
+  private bizCompany1 = [];
+  private bizCompany2 = [];
+  private bizCompany3 = [];
+  private bizCompany4 = [];
+  private telcoCompany1 = [];
+  private telcoCompany2 = [];
+  private telcoCompany3 = [];
+  private telcoCompany4 = [];
+  private healthCompany1 = [];
+  private healthCompany2 = [];
+  private healthCompany3 = [];
+  private healthCompany4 = [];
+  private lastRound: number = 0;
 
   private roundData = [{
     "company": "99X",
@@ -90,13 +110,20 @@ export class CpuComponent implements OnInit {
     // });
     // this.dressData();
     this.getSectorWiseData();
-    this.getCompanyWiseData();
   }
 
   async getSectorWiseData() {
     try {
-      console.log("LOGIN ACCESSED");
-      let xxx = await this.cpuService.getData();
+      let sectorData = await this.cpuService.getData();
+
+      sectorData[0].Technology.forEach(element => {
+        this.techCompanyArray.push(element);
+      });
+
+      sectorData[0].Business.forEach(element => {
+        this.bizCompanyArray.push(element);
+      });
+      this.getCompanyWiseData();
     } catch (error) {
       alert(error);
     }
@@ -104,42 +131,35 @@ export class CpuComponent implements OnInit {
 
   async getCompanyWiseData() {
     try {
-      console.log("Get Compny Wise Data");
-      let companyWiseDataArray = await this.cpuService.getCompanyWiseHistory('99X');
-      this.dressData(companyWiseDataArray);
-      this.performRegression();
-      console.log(companyWiseDataArray);
+      this.techCompanyArray.forEach(element => {
+        let companyWiseDataArray = this.cpuService.getCompanyWiseHistory(element);
+        this.dressData(companyWiseDataArray);
+        this.performRegression();
+        console.log(companyWiseDataArray);
+      })
+
     } catch (error) {
       alert(error);
     }
   }
 
   dressData(arrayOfData) {
-    /**
-     * One row of the data object looks like:
-     * {
-     *   TV: "10",
-     *   Radio: "100",
-     *   Newspaper: "20",
-     *   "Sales": "1000"
-     * }
-     *
-     * Hence, while adding the data points,
-     * we need to parse the String value as a Float.
-     */
-    // this.csvData.forEach((row) => {
-    //   // console.log("RADIO " + row.radio + " SALES " + row.sales);
-    //   this.X.push(this.f(row.radio));
-    //   this.y.push(this.f(row.sales));
-    // });
     arrayOfData.forEach((row) => {
-      // console.log("RADIO " + row.radio + " SALES " + row.sales);
+      this.lastRound = row.round;
       switch (row.companyName) {
         case '99X':
           this.TechnologyX.push(this.f(row.round));
           this.Technologyy.push(this.f(row.stockPrice));
+        case 'Virtusa':
+          this.TechnologyX.push(this.f(row.round));
+          this.Technologyy.push(this.f(row.stockPrice));
+        case 'WSO2':
+          this.TechnologyX.push(this.f(row.round));
+          this.Technologyy.push(this.f(row.stockPrice));
+        case 'IFS':
+          this.TechnologyX.push(this.f(row.round));
+          this.Technologyy.push(this.f(row.stockPrice));
       }
-
     });
   }
 
@@ -149,22 +169,16 @@ export class CpuComponent implements OnInit {
 
   performRegression() {
     this.regressionModel = new SLR(this.TechnologyX, this.Technologyy); // Train the model on training data
-    // console.log("TEST_STOCK" + this.regressionModel.toString(5));
-    // console.log("TEST_STOCK" + this.regressionModel.toString(5));
     this.playHand();
 
   }
 
   predictOutput() {
-    // this.regressionModel.predict(parseFloat(24))
-    // var person = prompt("Please Enter Your Prediction", "");
-    // if (person == null || person == "") {
-    //   alert("Please Enter a valid Amount");
-    //   this.predictOutput();
-    // } else {
-    alert("Predicted Result " + this.regressionModel.predict(parseFloat('400')));
-    //   // this.predictOutput();
-    // }
+    let nextRound: number = Number(this.lastRound) + 1;
+    console.log("NEXT ROUND" + nextRound);
+    // let floatNumber = parseFloat('' + nextRound);
+    let prediction=this.regressionModel.predict(parseFloat(""+nextRound));
+    console.log('Prediction'+prediction);
   }
 
   playHand() {

@@ -12,51 +12,64 @@ export class CpuPlayerService {
 
   public getData() {
 
-    let josnArray = [
-      {
-        "company": "99X",
-        "price": 103,
-        "round": 0,
-        "sector": "Technology"
-      },
-      {
-        "company": "Virtusa",
-        "price": 104,
-        "round": 0,
-        "sector": "Technology"
-      },
-      {
-        "company": "WSO2",
-        "price": 101,
-        "round": 0,
-        "sector": "Technology"
-      },
-      {
-        "company": "John Keells",
-        "price": 102,
-        "round": 0,
-        "sector": "Business"
-      },
-      {
-        "company": "Cargills",
-        "price": 102,
-        "round": 0,
-        "sector": "Business"
-      }
-    ];
+    // let josnArray = [
+    //   {
+    //     "company": "99X",
+    //     "price": 103,
+    //     "round": 0,
+    //     "sector": "Technology"
+    //   },
+    //   {
+    //     "company": "Virtusa",
+    //     "price": 104,
+    //     "round": 0,
+    //     "sector": "Technology"
+    //   },
+    //   {
+    //     "company": "WSO2",
+    //     "price": 101,
+    //     "round": 0,
+    //     "sector": "Technology"
+    //   },
+    //   {
+    //     "company": "John Keells",
+    //     "price": 102,
+    //     "round": 0,
+    //     "sector": "Business"
+    //   },
+    //   {
+    //     "company": "Cargills",
+    //     "price": 102,
+    //     "round": 0,
+    //     "sector": "Business"
+    //   }
+    // ];
 
-    return josnArray;
+    // return josnArray;
 
 
-    // console.log('Service Accessed');
-    // return this
+    let jsonArray = [{
+      "Technology": [
+        "99X",
+        "Virtusa",
+        "WSO2"
+      ],
+      "Business": [
+        "John Keells",
+        "Cargills"
+      ]
+    }];
+    return jsonArray;
+    // console.log('Service Accessed get data');
+    // let CompanyDetails = this
     //   .http
-    //   .get('https://stock-market-simulator.herokuapp.com/api/v1/game/round/stock/5b292d7d69fbe30030e38f76')
+    //   .get('https://stock-market-simulator.herokuapp.com/api/v1/game/stock/details?id=5b2dd881f202830030795210')
     //   .subscribe(response => {
-    //     // after game is reset
-    //     const responseStart: any = response.json();
-    //     console.log('stock Prices', responseStart);
+    //     const data: any = response.json();
+    //     return data;
     //   });
+    // console.log("SAMPLE" + JSON.stringify(CompanyDetails));
+    // return CompanyDetails;
   }
 
   public getCompanyWiseHistory(companyName) {
@@ -197,7 +210,6 @@ export class CpuPlayerService {
       .http
       .post('https://exithost.000webhostapp.com/bank/transaction', data)
       .subscribe(response => {
-        // after game is reset
         const responseStart: any = response.json();
         console.log('stock Prices', responseStart);
       });
