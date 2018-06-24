@@ -31,6 +31,7 @@ export class JoinedDetailServiceService {
     const users = this.getPersistUsers() || [];
     users.push(user);
     this.setUsersPersist(users);
+    this.currentUserSubject.next(user);
     localStorage.setItem('currentUser', JSON.stringify(user));
   }
 
