@@ -12,10 +12,6 @@ import { Observable } from "rxjs/Observable";
   styleUrls: ['./cpu.component.scss']
 })
 export class CpuComponent implements OnInit {
-
-  // private csvFilePath = "Advertising.csv";
-  // private ml = require('ml-regression');
-  // private csv;
   private SAMPLARR = [];
   private prices99X = [];
   private pricesVirtusa = [];
@@ -89,7 +85,6 @@ export class CpuComponent implements OnInit {
   async getCompanyWiseData() {
     try {
       await this.techCompanyParser();
-      // console.log('sp' + JSON.stringify(this.companyWiseDataArrayList));
       this.dressData(this.companyWiseDataArrayList);
       await this.generatePredictions();
     } catch (error) {
@@ -103,12 +98,10 @@ export class CpuComponent implements OnInit {
       switch (element) {
         case '99X PLC':
           let predicted99X = this.performRegression99X();
-          // console.log('predicted' + JSON.stringify(predicted99X));
           const newOb99X = {
             companyName: element,
             prediction: predicted99X,
           }
-          // console.log('PRED ' + JSON.stringify(newOb99X));
           this.predictionArray.push(newOb99X);
           break;
         case 'Virtusa PLC':
@@ -117,7 +110,6 @@ export class CpuComponent implements OnInit {
             companyName: element,
             prediction: predictedVirtusa,
           }
-          // console.log('PRED ' + JSON.stringify(newObVirtusa));
           this.predictionArray.push(newObVirtusa);
           break;
         case 'WSO2 PLC':
@@ -126,7 +118,6 @@ export class CpuComponent implements OnInit {
             companyName: element,
             prediction: predictedWSO2,
           }
-          // console.log('PRED ' + JSON.stringify(newObWSO2));
           this.predictionArray.push(newObWSO2);
           break;
         case 'IFS PLC':
@@ -204,8 +195,6 @@ export class CpuComponent implements OnInit {
     let highestPrice = 0;
     let company;
     this.predictionArray.forEach(element => {
-
-      console.log('company' + JSON.stringify(element));
 
       if (highestPrice < element.prediction) {
         highestPrice = element.prediction
