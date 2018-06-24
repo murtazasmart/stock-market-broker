@@ -9,7 +9,7 @@ Stock market broker is the frontend angular app for the project. This will call 
 ### API doc link - https://docs.google.com/spreadsheets/d/1tFuveKrxBRxqtGC7-UDONrHTRYYbcqwofPyL0zMwmcE/edit#gid=0
 ### Members:
  - Murtaza Anverali Esufali 16211211
- - Maheshi
+ - Maheshi K.H.Gunaratne    16211197 
  - Bhagya
  - Mekala
  - Kasun
