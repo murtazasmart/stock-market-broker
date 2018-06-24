@@ -5,22 +5,28 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Company Share Price</h4>
-                        <p class="category">The General Market and Sector Market values</p>
+                        <h4 class="title">Transaction History</h4>
+                        <p class="category">The transaction History of the Game</p>
                     </div>
                     <div class="content table-responsive table-full-width">
                           <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let row of tableData1.dataRows">
-                                        <td *ngFor="let cell of row">{{cell}}</td>
-                                    </tr>
-                                </tbody>
-                          </table>
+                        <thead>
+                            <tr>
+                                <th *ngFor="let cell of tableData1.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
+                            </tr>
+                        </thead>
+                        <tbody style="height: 500px; overflow: auto;">
+                            <tr *ngFor="let row of rowData | async" class="active">
+                                <td style="color:#44c5ac">{{row.name}}</td>
+                                <td>{{row.stock}}</td>
+                                <td>{{row.quantity}}</td>
+                                <td style="color: #f90e2d;font-size: 12pt;">{{row.type}}</td>
+                                <!-- <td>{{row.rectime}}</td>-->
+                                <td>{{row.turn}}</td>
+                                <td>{{row.price}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                     </div>
                 </div>

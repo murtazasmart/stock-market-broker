@@ -17,7 +17,7 @@ export const ROUTES : RouteInfo[] = [
   }, 
    {
     path: 'shareprice',
-    title: 'Company Share Price',
+    title: 'Transaction History',
     icon: 'pe-7s-culture',
     class: ''
   },
