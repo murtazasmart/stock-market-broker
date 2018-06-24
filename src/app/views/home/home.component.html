@@ -5,7 +5,9 @@
             <div class="col-md-6">
                 <p class="category" style="color: #f8f8f8;font-size: 18pt;">Current Round: {{currentRound}}</p>
             </div>
-            
+            <div class="col-md-6">
+                <p *ngIf="userBalance | async; let userBalance" class="category" style="color: #a8d858;font-size: 18pt;">Account balance: {{userBalance.balace}}</p>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
