@@ -19,7 +19,7 @@ export class JoinServiceService {
   {
     return this
       .http
-      .get('https://exithost.000webhostapp.com/bank/account')
+      .get('https://stock-market-bank-service.herokuapp.com/bank/account')
       .subscribe(response => {
         const account : any = response.json();
         if (account != null) {
@@ -56,7 +56,7 @@ export class JoinServiceService {
   {
     return this
       .http
-      .get('https://exithost.000webhostapp.com/bank/startgame')
+      .get('https://stock-market-bank-service.herokuapp.com/bank/startgame')
       .subscribe(response => {
         // after game is reset
         const responseStart : any = response.json();
@@ -69,7 +69,7 @@ export class JoinServiceService {
   {
     return this
       .http
-      .post('https://exithost.000webhostapp.com/bank/account', {
+      .post('https://stock-market-bank-service.herokuapp.com/bank/account', {
         Name: name
       }, {
         headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'})
