@@ -11,6 +11,7 @@ export class JoinComponent implements OnInit {
   model: any = {};
   loading = false;
   spinner:boolean=false;
+  spinnerstart:boolean=false;
   returnUrl: string;
   joined: boolean = false;
   playerName: string = null;
@@ -46,11 +47,11 @@ export class JoinComponent implements OnInit {
     }
   }
   async start() {
-    this.spinner=true;
+    this.spinnerstart=true;
     try {
       await this.joinService.startGame();
     } catch (error) {
-      this.spinner=false;
+      this.spinnerstart=false;
       alert(error);
     }
   }
