@@ -4,17 +4,6 @@ import { Http, Response } from '@angular/http';
 import { CpuPlayerService } from '../services/cpu-player.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from "rxjs/Observable";
-// import {Response} from '@an'
-// import * as csv from 'csvtojson';
-// import * as ml from 'ml-regression';
-// import { CSVDATA } from '../cpu/Advertising.csv';
-// import { Architect } from 'synaptic';
-// import { Perceptron } from 'synaptic';
-// import { Layer } from 'synaptic';
-// import { Network } from 'synaptic';
-// import { Trainer } from 'synaptic';
-
-// const { Layer, Network } = ;
 
 
 @Component({
@@ -27,7 +16,7 @@ export class CpuComponent implements OnInit {
   // private csvFilePath = "Advertising.csv";
   // private ml = require('ml-regression');
   // private csv;
-  // private SLR = '';
+  private SAMPLARR = [];
   private prices99X = [];
   private pricesVirtusa = [];
   private pricesCargills = [];
@@ -62,35 +51,47 @@ export class CpuComponent implements OnInit {
   private healthCompany4 = [];
   private predictionArray = [];
   private lastRound: number = 0;
+  private companyWiseDataArrayList = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private http: Http, private cpuService: CpuPlayerService) {
     this.getSectorWiseData();
   }
 
   async getSectorWiseData() {
-    try {
-      let sectorData = await this.cpuService.getData();
 
-      sectorData[0].Technology.forEach(element => {
+    let sectorData = await this.cpuService.getData();
+    try {
+      sectorData.Technology.forEach(element => {
         this.techCompanyArray.push(element);
       });
 
-      sectorData[0].Business.forEach(element => {
+      sectorData.Business.forEach(element => {
         this.bizCompanyArray.push(element);
       });
+
       this.getCompanyWiseData();
     } catch (error) {
       alert(error);
+    }
+
+
+  }
+
+  async techCompanyParser() {
+    for (let i = 0; i < this.techCompanyArray.length; i++) {
+      const element = this.techCompanyArray[i];
+      let companyWiseDataArray = await this.cpuService.getCompanyWiseHistory(element);
+      console.log('rec array' + JSON.stringify(companyWiseDataArray));
+      this.companyWiseDataArrayList.push(companyWiseDataArray);
     }
   }
 
   async getCompanyWiseData() {
     try {
-      this.techCompanyArray.forEach(element => {
-        let companyWiseDataArray = this.cpuService.getCompanyWiseHistory(element);
-        this.dressData(companyWiseDataArray);
-      });
-      this.generatePredictions();
+      await this.techCompanyParser();
+      // console.log('sp' + JSON.stringify(this.companyWiseDataArrayList));
+      this.dressData(this.companyWiseDataArrayList);
+      await this.generatePredictions();
     } catch (error) {
       alert(error);
     }
@@ -98,35 +99,37 @@ export class CpuComponent implements OnInit {
 
   generatePredictions() {
     this.techCompanyArray.forEach(element => {
+      console.log('cname' + JSON.stringify(element));
       switch (element) {
-        case '99X':
+        case '99X PLC':
           let predicted99X = this.performRegression99X();
+          // console.log('predicted' + JSON.stringify(predicted99X));
           const newOb99X = {
             companyName: element,
             prediction: predicted99X,
           }
-          console.log('PRED ' + JSON.stringify(newOb99X));
+          // console.log('PRED ' + JSON.stringify(newOb99X));
           this.predictionArray.push(newOb99X);
           break;
-        case 'Virtusa':
+        case 'Virtusa PLC':
           let predictedVirtusa = this.performRegressionVirtusa();
           const newObVirtusa = {
             companyName: element,
             prediction: predictedVirtusa,
           }
-          console.log('PRED ' + JSON.stringify(newObVirtusa));
+          // console.log('PRED ' + JSON.stringify(newObVirtusa));
           this.predictionArray.push(newObVirtusa);
           break;
-        case 'WSO2':
+        case 'WSO2 PLC':
           let predictedWSO2 = this.performRegressionWSO2();
           const newObWSO2 = {
             companyName: element,
             prediction: predictedWSO2,
           }
-          console.log('PRED ' + JSON.stringify(newObWSO2));
+          // console.log('PRED ' + JSON.stringify(newObWSO2));
           this.predictionArray.push(newObWSO2);
           break;
-        case 'IFS':
+        case 'IFS PLC':
           let predictedIFS = this.performRegressionIFS();
           const newObIFS = {
             companyName: element,
@@ -142,21 +145,24 @@ export class CpuComponent implements OnInit {
 
   dressData(arrayOfData) {
     arrayOfData.forEach((row) => {
-      this.lastRound = row.round;
-      switch (row.companyName) {
-        case '99X':
-          this.Technology1X.push(this.f(row.round));
-          this.Technology1y.push(this.f(row.stockPrice));
-        case 'Virtusa':
-          this.Technology2X.push(this.f(row.round));
-          this.Technology2y.push(this.f(row.stockPrice));
-        case 'WSO2':
-          this.Technology3X.push(this.f(row.round));
-          this.Technology3y.push(this.f(row.stockPrice));
-        case 'IFS':
-          this.Technology4X.push(this.f(row.round));
-          this.Technology4y.push(this.f(row.stockPrice));
-      }
+      this.lastRound = row[0].round;
+
+      row.forEach(element => {
+        switch (element.companyName) {
+          case '99X PLC':
+            this.Technology1X.push(this.f(element.round));
+            this.Technology1y.push(this.f(element.stockPrice[0]));
+          case 'Virtusa PLC':
+            this.Technology2X.push(this.f(element.round));
+            this.Technology2y.push(this.f(element.stockPrice[0]));
+          case 'WSO2 PLC':
+            this.Technology3X.push(this.f(element.round));
+            this.Technology3y.push(this.f(row[0].stockPrice[0]));
+          case 'IFS PLC':
+            this.Technology4X.push(this.f(element.round));
+            this.Technology4y.push(this.f(element.stockPrice[0]));
+        }
+      });
     });
   }
 
@@ -166,7 +172,6 @@ export class CpuComponent implements OnInit {
 
   performRegression99X() {
     this.regressionModel = new SLR(this.Technology1X, this.Technology1y); // Train the model on training data
-
     let prediction = this.predictOutput();// console.log("regMod" + this.regressionModel);
     return prediction;
   }
@@ -199,6 +204,9 @@ export class CpuComponent implements OnInit {
     let highestPrice = 0;
     let company;
     this.predictionArray.forEach(element => {
+
+      console.log('company' + JSON.stringify(element));
+
       if (highestPrice < element.prediction) {
         highestPrice = element.prediction
         company = element.companyName

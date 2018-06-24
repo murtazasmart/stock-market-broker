@@ -5,26 +5,32 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app.routing';
-import { NavbarModule } from './shared/navbar/navbar.module';
-import { FooterModule } from './shared/footer/footer.module';
-import { SidebarModule } from './sidebar/sidebar.module';
+import { NavbarModule } from './views/shared/navbar/navbar.module';
+import { FooterModule } from './views/shared/footer/footer.module';
+import { SidebarModule } from './views/sidebar/sidebar.module';
 import { LbdModule } from './lbd/lbd.module';
 
 import { AppComponent } from './app.component';
 
-import { HomeComponent } from './home/home.component';
-import { UserComponent } from './user/user.component';
-import { TablesComponent } from './tables/tables.component';
-import { TypographyComponent } from './typography/typography.component';
+import { HomeComponent } from './views/home/home.component';
+import { UserComponent } from './views/user/user.component';
+import { TablesComponent } from './views/tables/tables.component';
+import { TypographyComponent } from './views/typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
-import { MapsComponent } from './maps/maps.component';
-import { NotificationsComponent } from './notifications/notifications.component';
-import { UpgradeComponent } from './upgrade/upgrade.component';
-import { JoinComponent } from './join/join.component';
-import { SharepriceComponent } from './shareprice/shareprice.component';
-import { CpuComponent } from './cpu/cpu.component';
-import { CpuPlayerService } from './services/cpu-player.service'
-
+import { NotificationsComponent } from './views/notifications/notifications.component';
+import { UpgradeComponent } from './views/upgrade/upgrade.component';
+import { JoinComponent } from './views/join/join.component';
+import { SharepriceComponent } from './views/shareprice/shareprice.component';
+import { JoinServiceService } from './services/join-service.service';
+import { JoinedDetailServiceService } from './services/joined-detail-service.service';
+import { AnalystServiceService } from './services/analyst-service.service';
+import { TransactionsServiceService } from './services/transactions-service.service';
+import { BrokerServiceService } from './services/broker-service.service';
+import { SimulatorServiceService } from './services/simulator-service.service'
+import { GameServiceService } from './services/game-service.service'
+import { CpuComponent } from './cpu/cpu.component'
+import { CpuPlayerService } from './services/cpu-player.service';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,12 +39,11 @@ import { CpuPlayerService } from './services/cpu-player.service'
     TablesComponent,
     TypographyComponent,
     IconsComponent,
-    MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
     JoinComponent,
     SharepriceComponent,
-    CpuComponent,
+    CpuComponent
 
   ],
   imports: [
@@ -52,7 +57,18 @@ import { CpuPlayerService } from './services/cpu-player.service'
     AppRoutingModule,
     LbdModule
   ],
-  providers: [CpuPlayerService],
+  providers: [
+    JoinServiceService,
+    JoinedDetailServiceService,
+    AnalystServiceService,
+    TransactionsServiceService,
+    BrokerServiceService,
+    SimulatorServiceService,
+    GameServiceService,
+    CpuPlayerService,
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

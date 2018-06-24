@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Headers } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router'
+import { AnalystServiceService } from './analyst-service.service';
+import { resolve } from 'url';
+import { Subscription, Observable } from 'rxjs';
 
 @Injectable()
 export class CpuPlayerService {
@@ -12,139 +15,108 @@ export class CpuPlayerService {
 
   public getData() {
 
+
     // let josnArray = [
     //   {
-    //     "company": "99X",
-    //     "price": 103,
-    //     "round": 0,
-    //     "sector": "Technology"
-    //   },
-    //   {
-    //     "company": "Virtusa",
-    //     "price": 104,
-    //     "round": 0,
-    //     "sector": "Technology"
-    //   },
-    //   {
-    //     "company": "WSO2",
-    //     "price": 101,
-    //     "round": 0,
-    //     "sector": "Technology"
-    //   },
-    //   {
-    //     "company": "John Keells",
-    //     "price": 102,
-    //     "round": 0,
-    //     "sector": "Business"
-    //   },
-    //   {
-    //     "company": "Cargills",
-    //     "price": 102,
-    //     "round": 0,
-    //     "sector": "Business"
+    //     "Technology": [
+    //       "99X",
+    //       "Virtusa",
+    //       "WSO2"
+    //     ],
+    //     "Business": [
+    //       "John Keells",
+    //       "Cargills"
+    //     ]
     //   }
     // ];
 
     // return josnArray;
 
 
-    let jsonArray = [{
-      "Technology": [
-        "99X",
-        "Virtusa",
-        "WSO2"
-      ],
-      "Business": [
-        "John Keells",
-        "Cargills"
-      ]
-    }];
-    return jsonArray;
-    // console.log('Service Accessed get data');
-    // let CompanyDetails = this
-    //   .http
-    //   .get('https://stock-market-simulator.herokuapp.com/api/v1/game/stock/details?id=5b2dd881f202830030795210')
-    //   .subscribe(response => {
-    //     const data: any = response.json();
-    //     return data;
-    //   });
-    // console.log("SAMPLE" + JSON.stringify(CompanyDetails));
-    // return CompanyDetails;
+    return this.http
+      .get('https://stock-market-simulator.herokuapp.com/api/v1/game/stock/details?id=5b2f42ae0272d00030623f97')
+      .toPromise().then((res) => {
+        console.log(res.json());
+        return res.json();
+      }).catch((err) => {
+        console.log(err);
+        return err;
+      });
   }
 
   public getCompanyWiseHistory(companyName) {
-    let josnArray = [{
-      "0": 123
-    },
-    {
-      "1": 163
-    },
-    {
-      "2": 133
-    },
-    {
-      "3": 145
-    },
-    {
-      "4": 111
-    },
-    {
-      "5": 131
-    },
-    {
-      "6": 154
-    },
-    {
-      "7": 160
-    },
-    {
-      "8": 100
-    },
-    {
-      "9": 94
-    },
-    {
-      "10": 90
-    },
-    {
-      "11": 123
-    },
-    {
-      "12": 131
-    },
-    {
-      "13": 117
-    },
-    {
-      "14": 109
-    },
-    {
-      "15": 121
-    },
-    {
-      "16": 154
-    },
-    {
-      "17": 129
-    },
-    {
-      "18": 103
-    },
-    {
-      "19": 138
-    },
-    {
-      "20": 154
-    },
-    {
-      "21": 141
-    },
-    {
-      "22": 125
-    },
-    {
-      "23": 122
-    },];
+    // let josnArray = [{
+    //   "0": 123
+    // },
+    // {
+    //   "1": 163
+    // },
+    // {
+    //   "2": 133
+    // },
+    // {
+    //   "3": 145
+    // },
+    // {
+    //   "4": 111
+    // },
+    // {
+    //   "5": 131
+    // },
+    // {
+    //   "6": 154
+    // },
+    // {
+    //   "7": 160
+    // },
+    // {
+    //   "8": 100
+    // },
+    // {
+    //   "9": 94
+    // },
+    // {
+    //   "10": 90
+    // },
+    // {
+    //   "11": 123
+    // },
+    // {
+    //   "12": 131
+    // },
+    // {
+    //   "13": 117
+    // },
+    // {
+    //   "14": 109
+    // },
+    // {
+    //   "15": 121
+    // },
+    // {
+    //   "16": 154
+    // },
+    // {
+    //   "17": 129
+    // },
+    // {
+    //   "18": 103
+    // },
+    // {
+    //   "19": 138
+    // },
+    // {
+    //   "20": 154
+    // },
+    // {
+    //   "21": 141
+    // },
+    // {
+    //   "22": 125
+    // },
+    // {
+    //   "23": 122
+    // },];
 
     // let sample: {
     //   company: '',
@@ -152,29 +124,32 @@ export class CpuPlayerService {
     //   stockprice: '',
     // }
 
-    let ParentArray = [];
+    let ParentArray2 = [];
 
-    for (var i in josnArray) {
-      let round = i;
-      let stockPrice = josnArray[i][i];
-      const newOb = {
-        companyName,
-        round,
-        stockPrice
-      };
-      ParentArray.push(newOb);
-    }
-    return ParentArray;
-  }
-
-  public bankStartGame() {
     return this
       .http
-      .get('https://exithost.000webhostapp.com/bank/startgame')
-      .subscribe(response => {
-        const responseStart: any = response.json();
-        console.log('BANK STarted', responseStart);
+      .get('https://stock-market-simulator.herokuapp.com/api/v1/game/stock/history?id=5b2f42ae0272d00030623f97&stockName=' + companyName)
+      .toPromise().then((res) => {
+        let jsonArray = res.json();
+        // console.log(jsonArray);
+        for (var i in jsonArray) {
+          let round = i;
+          let stockPrice = jsonArray;
+          const newOb = {
+            companyName,
+            round,
+            stockPrice
+          };
+          ParentArray2.push(newOb);
+        }
+        // console.log(ParentArray2);
+        return ParentArray2;
+      }).catch((err) => {
+        console.log(err);
+        return err;
       });
+
+    // return ParentArray;
 
   }
 
