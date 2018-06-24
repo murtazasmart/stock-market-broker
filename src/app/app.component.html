@@ -15,6 +15,6 @@
     </div>
 </div>
 
-<div class="wrapper">
-    <app-join *ngIf="!isLoggedIn()"> </app-join>
+<div class="wrapper" *ngIf="!isLoggedIn()">
+    <app-join></app-join>
 </div>
