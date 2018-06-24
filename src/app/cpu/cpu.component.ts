@@ -4,7 +4,7 @@ import { Http, Response } from '@angular/http';
 import { CpuPlayerService } from '../services/cpu-player.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from "rxjs/Observable";
-
+//sample change
 
 @Component({
   selector: 'app-cpu',
