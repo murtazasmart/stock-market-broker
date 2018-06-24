@@ -21,6 +21,12 @@ export const ROUTES : RouteInfo[] = [
     icon: 'pe-7s-culture',
     class: ''
   },
+  {
+    path: 'user',
+    title: 'Stock Prices History',
+    icon: 'pe-7s-culture',
+    class: ''
+  }
   // { path: 'typography', title: 'Typography',  icon:'pe-7s-news-paper', class:
   // '' }, { path: 'icons', title: 'Icons',  icon:'pe-7s-science', class: '' }, {
   // path: 'maps', title: 'Maps',  icon:'pe-7s-map-marker', class: '' }, { path:

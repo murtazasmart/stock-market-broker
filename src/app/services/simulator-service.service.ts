@@ -6,20 +6,35 @@ import { User } from '../models/user';
 
 @Injectable()
 export class SimulatorServiceService {
+  currentCompany: Observable<Stock>;
   userDetails: Observable<any>;
 
   private userDetailsSubject: BehaviorSubject<any>;
+  private currentCompanySubject: BehaviorSubject<Stock>;
 
   constructor(public http: Http) {
     this.userDetailsSubject = new BehaviorSubject<any>(null);
     this.userDetails = this.userDetailsSubject.asObservable();
     this.userDetailsSubject.next(JSON.parse(localStorage.getItem('userData')) || null);
+    this.currentCompanySubject = new BehaviorSubject<Stock>(null);
   }
 
   public getCurrentStockPrices(stock: string): any{
     let dataArray = JSON.parse(localStorage.getItem('userData')).round.stocks;
     return dataArray.find(x => x.company === stock).price;
   }
+  public getStockNames(round:number): any{
+    let dataArray = JSON.parse(localStorage.getItem('userData')).round.stocks;
+    //return dataArray.find(x => x.company === round).company;
+    console.log(dataArray);
+    return dataArray;
+   
+  }
+  public changeCurrentCompany(stock: Stock): void {
+    this.currentCompanySubject.next(stock);
+    localStorage.setItem('currentCompany', JSON.stringify(stock.company));
+  }
+
 
   public makeNextTurn(): Subscription {
     console.log(JSON.parse(localStorage.getItem('userData')).gameId);
