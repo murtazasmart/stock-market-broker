@@ -14,7 +14,7 @@ export class TransactionsServiceService {
     shortDescription: string
   ): Observable<Response> {
     return this.http.post(
-      'https://exithost.000webhostapp.com/bank/transaction/',
+      'https://stock-market-bank-service.herokuapp.com/bank/transaction/',
       {
         type: String(type),
         amount: String(amount),
@@ -29,7 +29,7 @@ export class TransactionsServiceService {
 
   public getBalance(userId: number): Observable<any> {
     return this.http
-      .get('https://exithost.000webhostapp.com/bank/balance/' + userId, {
+      .get('https://stock-market-bank-service.herokuapp.com/bank/balance/' + userId, {
         headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' })
       })
       .map(res => {
