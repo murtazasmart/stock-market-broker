@@ -52,6 +52,7 @@ export class CpuComponent implements OnInit {
   private predictionArray = [];
   private lastRound: number = 0;
   private companyWiseDataArrayList = [];
+  private shareDetails = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private http: Http, private cpuService: CpuPlayerService) {
     this.getSectorWiseData();
@@ -81,7 +82,6 @@ export class CpuComponent implements OnInit {
     for (let i = 0; i < this.techCompanyArray.length; i++) {
       const element = this.techCompanyArray[i];
       let companyWiseDataArray = await this.cpuService.getCompanyWiseHistory(element);
-      console.log('rec array' + JSON.stringify(companyWiseDataArray));
       this.companyWiseDataArrayList.push(companyWiseDataArray);
     }
   }
@@ -99,7 +99,6 @@ export class CpuComponent implements OnInit {
 
   generatePredictions() {
     this.techCompanyArray.forEach(element => {
-      console.log('cname' + JSON.stringify(element));
       switch (element) {
         case '99X PLC':
           let predicted99X = this.performRegression99X();
@@ -140,13 +139,23 @@ export class CpuComponent implements OnInit {
       }
     });
     let decision = this.makeDecision();
-    console.log("Company to Invest is" + decision);
+    localStorage.setItem('prediction', decision);
+    this.getAcountBalance();
+  }
+
+  async getAcountBalance() {
+    let accountDetails = await this.cpuService.getAccountBalance();
+    let balancePercentage = (accountDetails.balace / 1000) * 100;
+    if (balancePercentage >= 20) {
+      this.investOn();
+    } else {
+      this.sellShares();
+    }
   }
 
   dressData(arrayOfData) {
     arrayOfData.forEach((row) => {
       this.lastRound = row[0].round;
-
       row.forEach(element => {
         switch (element.companyName) {
           case '99X PLC':
@@ -204,9 +213,6 @@ export class CpuComponent implements OnInit {
     let highestPrice = 0;
     let company;
     this.predictionArray.forEach(element => {
-
-      console.log('company' + JSON.stringify(element));
-
       if (highestPrice < element.prediction) {
         highestPrice = element.prediction
         company = element.companyName
@@ -216,22 +222,34 @@ export class CpuComponent implements OnInit {
   }
 
   investOn() {
-
-  }
-
-  buyShares() {
-
+    let companyName = localStorage.getItem('prediction');
+    this.getShareDetails();
+    console.log('Investing ON ' + localStorage.getItem('prediction'));
   }
 
   sellShares() {
 
   }
 
-  getRoundWiseSectorInformation() {
+  async getShareDetails() {
+    let shareDetails = await this.cpuService.getShareDetails();
+    shareDetails.forEach(element => {
+      let price = element.price;
+      let qty = element.quantity;
+      let company = element.stock;
 
+      let newOb = {
+        price,
+        qty,
+        company
+      }
+      this.shareDetails.push(newOb);
+    });
+    console.log('getShareDetails ' + JSON.stringify(this.shareDetails));
   }
 
-  getRoundWiseCompanyInformation() {
+
+  updateBankAccount() {
 
   }
 
