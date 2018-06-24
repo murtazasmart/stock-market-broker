@@ -14,8 +14,12 @@ export const ROUTES : RouteInfo[] = [
     title: 'Dashboard',
     icon: 'pe-7s-graph',
     class: ''
-  }, 
-   {
+  }, {
+    path: 'user',
+    title: 'User Profile',
+    icon: 'pe-7s-user',
+    class: ''
+  }, {
     path: 'shareprice',
     title: 'Company Share Price',
     icon: 'pe-7s-culture',

@@ -10,7 +10,6 @@ import { User } from '../../models/user';
 export class JoinComponent implements OnInit {
   model: any = {};
   loading = false;
-  spinner:boolean=false;
   returnUrl: string;
   joined: boolean = false;
   playerName: string = null;
@@ -32,25 +31,20 @@ export class JoinComponent implements OnInit {
   ngOnInit() {}
 
   async login() {
-    this.spinner=true;
     try {
       this.joinService.loggin(this.playerName).subscribe(res => {
-        this.spinner=false;
         this.playerName = '';
         this.filled = false;
         this.userList = this.joinedDetailServiceService.getUsers();
       });
     } catch (error) {
-      this.spinner=false;
       alert(error);
     }
   }
   async start() {
-    this.spinner=true;
     try {
       await this.joinService.startGame();
     } catch (error) {
-      this.spinner=false;
       alert(error);
     }
   }

@@ -39,11 +39,9 @@
                         <h4 class="title" style="color: #fff">Company Stock Prices</h4>
                         <p class="category" style="color: #fff">Current Round: {{currentRound}}</p>
                         <p *ngIf="userBalance | async; let userBalance" class="category" style="color: #fff">account balance: {{userBalance.balace}}</p>
-                        <app-spinner *ngIf="spinnerbuy" style="padding-left: 30%;"></app-spinner>
                     </div>
                     <div *ngIf="rowData2" class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
-                            
                             <thead>
                                 <tr>
                                     <th *ngFor="let cell of tableData2.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
@@ -54,15 +52,9 @@
                                     <td>{{row.company}}</td>
                                     <td>{{row.sector}}</td>
                                     <td style="color: #F94C4C; font-size: 14pt;">{{row.price}}</td>
-                                     <td>
-                                        
-                                        <button (click)="toggleShowBuy(row.price, row.company)" class="btn btn-success btn-sm">Buy</button>
-                                    </td>
-
-                                   <!-- <td>
-                                        
+                                    <td>
                                         <button (click)="buyShare(row.price, row.company)" class="btn btn-success btn-sm">Buy</button>
-                                    </td>-->
+                                    </td>
                                     <!-- <td ><button class="btn btn-warning btn-xs">Sell</button></td> -->
                                 </tr>
                             </tbody>
@@ -85,26 +77,18 @@
                     </div>
                     <div class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
-                             <app-spinner *ngIf="spinnersell"></app-spinner>
                             <thead>
                                 <tr>
                                     <th *ngFor="let cell of tableData3.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
                                 </tr>
                             </thead>
                             <tbody style="height: 500px; overflow: auto;">
-                               
                                 <tr *ngFor="let row of portfolio | async">
                                     <td>{{row.stock}}</td>
                                     <td>{{row.quantity}}</td>
-                                    <!--<td>
-                                        
-                                        <button (click)="sellShare(row.price, row.stock)" class="btn btn-danger btn-xs">Sell</button>
-                                    </td>-->
                                     <td>
-                                        
-                                        <button (click)="toggleShowSell(row.price, row.stock, row.quantity)" class="btn btn-danger btn-sm">Sell</button>
+                                        <button (click)="sellShare(row.price, row.stock)" class="btn btn-danger btn-xs">Sell</button>
                                     </td>
-
                                 </tr>
                             </tbody>
                         </table>
