@@ -185,7 +185,7 @@ export class HomeComponent implements OnInit {
         this.spinnerbuy = true;
         return this
           .brokerServiceService
-          .bTransaction(Name, stock, quantity, 'buy', stockPrice, this.currentRound);
+          .bTransaction(Name, stock, quantity, 'buy', stockPrice,JSON.parse(localStorage.getItem('userData')).gameId, this.currentRound);
       })
       .subscribe(data => {
         console.log(data);
@@ -205,7 +205,7 @@ export class HomeComponent implements OnInit {
     console.log(stockPrice);
     this
       .brokerServiceService
-      .bTransaction(Name, company, quantity, 'sell', stockPrice, this.currentRound)
+      .bTransaction(Name, company, quantity, 'sell', stockPrice,JSON.parse(localStorage.getItem('userData')).gameId, this.currentRound)
       .flatMap(response => {
         //this.spinnersell = false;
         return this
