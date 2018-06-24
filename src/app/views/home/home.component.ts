@@ -197,7 +197,7 @@ export class HomeComponent implements OnInit {
 
   public sellShare(price : any, company : string, quantity : number) {
     console.log(price, company, quantity);
-    //this.spinnersell = true;
+    this.spinnersell = true;
     const {accountNumber, Name} = this.currentUser;
     const stockPrice = this
       .simulatorServiceService
@@ -207,7 +207,7 @@ export class HomeComponent implements OnInit {
       .brokerServiceService
       .bTransaction(Name, company, quantity, 'sell', stockPrice,JSON.parse(localStorage.getItem('userData')).gameId, this.currentRound)
       .flatMap(response => {
-        //this.spinnersell = false;
+        this.spinnersell = false;
         return this
           .transactionsServiceService
           .transaction('credit', String(stockPrice * quantity), String(accountNumber), 'selling');
@@ -215,7 +215,7 @@ export class HomeComponent implements OnInit {
       })
       .subscribe(data => {
         console.log(data);
-        //this.spinnersell = false;
+        this.spinnersell = false;
         swal('Success!', 'you have succefully sold a stock!', 'success')
         this.uiChange();
       });
