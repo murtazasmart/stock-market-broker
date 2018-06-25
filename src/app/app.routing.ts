@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: "notifications", component: NotificationsComponent },
   { path: "upgrade", component: UpgradeComponent },
   { path: "finish", component: EndgameComponent },
-  { path: "", redirectTo: "join", pathMatch: "full" }
+  { path: "", redirectTo: "dashboard", pathMatch: "full" }
 ];
 
 @NgModule({
