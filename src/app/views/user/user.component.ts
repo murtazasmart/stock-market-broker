@@ -17,6 +17,7 @@ import { AnalystServiceService } from "../../services/analyst-service.service";
 import { TransactionsServiceService } from "../../services/transactions-service.service";
 import { User } from "../../models/user";
 import { Stock } from "../../models/stock";
+import { Price } from "../../models/price";
 import swal from "sweetalert2";
 
 declare interface TableData {
@@ -33,6 +34,7 @@ export class UserComponent implements OnInit {
   public tableData2: TableData;
   public tableData3: TableData;
   private rowData : Observable < Stock[]>;
+  private priceData: Observable<Price[]>;
   private rowData2: any;
   private currentRound: number;
   private currentHistory: History = null;
@@ -45,19 +47,8 @@ export class UserComponent implements OnInit {
     private gameServiceService: GameServiceService,
     private accountsService: AccountsService
   ) {
-    //when next round clicks
-    /*this.simulatorServiceService.userDetails.subscribe(value => {
-      console.log(value);
-      this.rowData2 = value.round.stocks;
-      console.log("company",this.rowData2);
-      this.currentRound = value.currentRound;
-      
-
-     
-       console.log(JSON.parse(localStorage.getItem("userData")).gameId);
-    });*/
+    
     this.rowData=this.simulatorServiceService.getStockNames(this.currentRound);
-
     let companyArray = this.simulatorServiceService.getStockNames(this.currentRound);
     let companyLength = companyArray.length;
     console.log(companyLength);
@@ -72,16 +63,16 @@ export class UserComponent implements OnInit {
     console.log("companylist",companylist);
     localStorage.setItem("companyList", JSON.stringify(companylist));
 
-    this.tableData1 = {
-      headerRow: ["Name", "Stock", "Quantity", "Type", "Turn", "Price"],
-      dataRows: null
-    };
+    
   }
-  public changeCurrentCompany(stock: Stock): void {
+  public async changeCurrentCompany(stock: Stock){
     console.log('iniside the company change', stock);
     this.simulatorServiceService.changeCurrentCompany(stock);
     this.currentCompany=JSON.parse(localStorage.getItem('currentCompany'))
+    await this.simulatorServiceService.getPriceVariable(JSON.parse(localStorage.getItem("userData")).gameId,this.currentCompany);
+    console.log("end");
   }
+  
 
   ngOnInit() {}
 }

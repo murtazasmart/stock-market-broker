@@ -3,6 +3,7 @@ import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { Http, Response } from '@angular/http';
 import { Stock } from '../models/stock';
 import { User } from '../models/user';
+import { Price } from '../models/price';
 
 @Injectable()
 export class SimulatorServiceService {
@@ -33,6 +34,25 @@ export class SimulatorServiceService {
   public changeCurrentCompany(stock: Stock): void {
     this.currentCompanySubject.next(stock);
     localStorage.setItem('currentCompany', JSON.stringify(stock.company));
+  }
+
+  public getPriceVariable(gameId :string,stockName:string) : Observable <Price[]> {
+    let apiUrl='https://stock-market-simulator.herokuapp.com/api/v1/game/stock/history?id='+gameId+'&stockName='+stockName;
+    console.log('https://stock-market-simulator.herokuapp.com/api/v1/game/stock/history?id='+gameId+'&stockName='+stockName);
+    return this
+      .http
+      .get(apiUrl)
+      .map(res => {
+        console.log(res.json());
+        console.log('price Vaiables');
+        return res
+          .json()
+          .map(item => {
+            console.log(item.round);
+            console.log(item.price);
+            return new Price(item.round, item.price);
+          });
+      });
   }
 
 
