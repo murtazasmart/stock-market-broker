@@ -5,6 +5,8 @@ import { Http, Response } from '@angular/http';
 import { JoinServiceService } from '../../services/join-service.service';
 import { JoinedDetailServiceService } from '../../services/joined-detail-service.service';
 import { User } from '../../models/user';
+import { CpuComponent } from '../../cpu/cpu.component';
+import { AIBot } from '../../models/aibot';
 
 @Component({ selector: 'app-join', templateUrl: './join.component.html', styleUrls: ['./join.component.scss'] })
 export class JoinComponent implements OnInit {
@@ -17,6 +19,7 @@ export class JoinComponent implements OnInit {
   playerName: string = null;
   filled: boolean = true;
   userList: User[];
+  aiBotList: AIBot[];
 
   constructor(
     private route: ActivatedRoute,
@@ -40,6 +43,24 @@ export class JoinComponent implements OnInit {
         this.playerName = '';
         this.filled = false;
         this.userList = this.joinedDetailServiceService.getUsers();
+      });
+    } catch (error) {
+      this.spinner=false;
+      alert(error);
+    }
+  }
+
+  async loginAIBot() {
+    this.spinner=true;
+    try {
+      this.joinService.logginAIBot(this.playerName).subscribe(res => {
+        this.spinner=false;
+        this.playerName = '';
+        this.filled = false;
+        // this.aiBotList = this.joinedDetailServiceService.getUsers();
+        this.aiBotList = this.joinedDetailServiceService.getAIBots();
+        localStorage.setItem("aiBots", JSON.stringify(this.aiBotList));
+        console.log(this.aiBotList);
       });
     } catch (error) {
       this.spinner=false;

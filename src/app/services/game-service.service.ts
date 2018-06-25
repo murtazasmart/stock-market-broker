@@ -25,6 +25,7 @@ export class GameServiceService {
 
   public async checkWinner() {
     let players = this.joinedDetailServiceService.getUsers();
+    let aiBots = this.joinedDetailServiceService.getAIBots();
     let gamePlayer: Player;
     let newPlayerList: Player[] = [];
     let cash: number;
@@ -34,11 +35,23 @@ export class GameServiceService {
       observables.push(this.transactionsServiceService.getBalance(player.accountNumber));
     }
 
+    for (let aiBot of aiBots) {
+      observables.push(this.transactionsServiceService.getBalance(aiBot.accountNumber));
+    }
+
+    let allPlayers = [];
+    players.forEach((player) => {
+      allPlayers.push(player);
+    });
+    aiBots.forEach((aiBot) => {
+      allPlayers.push(aiBot);
+    });
+
     Observable.forkJoin(observables).subscribe(dataArray => {
       // All observables in `observables` array have resolved and `dataArray` is an array of result of each observable
-      console.log(dataArray, players);
+      console.log(dataArray, players, aiBots, allPlayers);
       for (let data of dataArray) {
-        gamePlayer = new Player(players.find(x => x.accountNumber === Number(data.accountNumber)).Name, data.accountNumber, null, Number(data.balace));
+        gamePlayer = new Player(allPlayers.find(x => x.accountNumber === Number(data.accountNumber)).Name, data.accountNumber, null, Number(data.balace));
         newPlayerList.push(gamePlayer);
       }
       let max = 0;

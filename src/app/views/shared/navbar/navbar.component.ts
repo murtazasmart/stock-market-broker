@@ -12,6 +12,8 @@ import { User } from "../../../models/user";
 import { SimulatorServiceService } from "../../../services/simulator-service.service";
 import { GameServiceService } from "../../../services/game-service.service";
 import { Player } from "../../../models/player";
+import { AIBot } from "../../../models/aibot";
+import { AibotService } from "../../../services/aibot.service";
 
 @Component({
   // moduleId: module.id,
@@ -36,7 +38,8 @@ export class NavbarComponent implements OnInit {
     private joinService: JoinServiceService,
     private joinedDetailServiceService: JoinedDetailServiceService,
     private simulatorServiceService: SimulatorServiceService,
-    private gameServiceService: GameServiceService
+    private gameServiceService: GameServiceService,
+    private aiBotService: AibotService,
   ) {
     this.userList = this.joinedDetailServiceService.getUsers();
     this.location = location;
@@ -66,9 +69,11 @@ export class NavbarComponent implements OnInit {
   }
 
   public async nextTurn() {
+    let aiBotUserList = JSON.parse(localStorage.getItem("aiBots"));
+    await this.aiBotService.runBotMoves(aiBotUserList);
+    
     this.simulatorServiceService.makeNextTurn();
     await this.gameServiceService.checkWinner();
-
     this.changeRound();
   }
 

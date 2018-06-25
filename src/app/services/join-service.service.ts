@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { JoinedDetailServiceService } from './joined-detail-service.service'
 import { User } from '../models/user';
 import { Subscription, Observable } from 'rxjs';
+import { AIBot } from '../models/aibot';
 
 @Injectable()
 export class JoinServiceService {
@@ -97,6 +98,26 @@ export class JoinServiceService {
           const user: User = decodedBankAccount;
           this.joinedDetailServiceService.addUser(user);
           console.log(this.joinedDetailServiceService.getUsers());
+        }
+      })
+
+  }
+
+  public logginAIBot(name: string): Observable<any> {
+    return this
+      .http
+      .post('https://stock-market-bank-service.herokuapp.com/bank/account', {
+        Name: name
+      }, {
+          headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' })
+        })
+      .map(response => {
+        const decodedBankAccount: any = response.json();
+        console.log('create join', decodedBankAccount);
+        if (decodedBankAccount.Name === name) {
+          const aiBot: AIBot = decodedBankAccount;
+          this.joinedDetailServiceService.addAIBot(aiBot);
+          console.log(this.joinedDetailServiceService.getAIBots());
         }
       })
 
