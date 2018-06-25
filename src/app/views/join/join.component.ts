@@ -30,7 +30,7 @@ export class JoinComponent implements OnInit {
     this.userList = this.joinedDetailServiceService.getUsers();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async login() {
     this.spinner=true;
@@ -46,6 +46,22 @@ export class JoinComponent implements OnInit {
       alert(error);
     }
   }
+
+
+  // async addBot() {
+  //   this.spinner = true;
+  //   try {
+  //     this.joinService.addBot(this.playerName).subscribe(res => {
+  //       this.spinner = false;
+  //       this.playerName = '';
+  //       this.filled = false;
+  //       this.userList = this.joinedDetailServiceService.getUsers();
+  //     });
+  //   } catch (error) {
+  //     this.spinner = false;
+  //     alert(error);
+  //   }
+  // }
   async start() {
     this.spinnerstart=true;
     try {

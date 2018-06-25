@@ -11,6 +11,7 @@ import { IconsComponent } from "./icons/icons.component";
 import { NotificationsComponent } from "./views/notifications/notifications.component";
 import { UpgradeComponent } from "./views/upgrade/upgrade.component";
 import { SharepriceComponent } from "./views/shareprice/shareprice.component";
+import { CpuComponent } from "./cpu/cpu.component";
 /* 
 here defined routes and unwanted are commented
 */
@@ -18,6 +19,7 @@ here defined routes and unwanted are commented
 const routes: Routes = [
   { path: "dashboard", component: HomeComponent },
   { path: "join", component: JoinComponent },
+  { path: "cpu", component: CpuComponent },
   { path: "user", component: UserComponent },
   { path: "table", component: TablesComponent },
   { path: "shareprice", component: SharepriceComponent },
@@ -32,4 +34,4 @@ const routes: Routes = [
   imports: [CommonModule, BrowserModule, RouterModule.forRoot(routes)],
   exports: []
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
