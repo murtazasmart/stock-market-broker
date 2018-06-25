@@ -15,7 +15,7 @@ export class AnalystServiceService {
     console.log('success', user.Name, turn, gameId);
     return this
       .http
-      .post('https://stock-market-analyst.herokuapp.com/webapi/trends/' + user.Name + '/' + gameId + '/' + turn)
+      .get('https://stock-market-analyst.herokuapp.com/webapi/trends/' + user.Name + '/' + gameId + '/' + turn)
       // , {
       //   user: user.Name ,
       //   turn: String(turn),
