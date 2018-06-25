@@ -31,6 +31,7 @@ import { GameServiceService } from "./services/game-service.service";
 import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 import { SpinnerComponent } from "./views/spinner/spinner.component";
 import { AccountsService } from "./services/accounts.service";
+import { EndgameComponent } from './views/endgame/endgame.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,8 @@ import { AccountsService } from "./services/accounts.service";
     UpgradeComponent,
     JoinComponent,
     SharepriceComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    EndgameComponent
   ],
   imports: [
     BrowserModule,
