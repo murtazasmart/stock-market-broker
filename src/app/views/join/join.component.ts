@@ -46,8 +46,9 @@ export class JoinComponent implements OnInit {
         this.userList = this.joinedDetailServiceService.getUsers();
       });
     } catch (error) {
+      console.log('error occured');
       this.spinner = false;
-      alert(error);
+      swal('Error!', 'Joining Failed! Try With A different User Name', 'error');
     }
   }
 
@@ -64,8 +65,9 @@ export class JoinComponent implements OnInit {
         console.log(this.aiBotList);
       });
     } catch (error) {
+      console.log('error occured');
       this.spinner = false;
-      alert(error);
+      swal('Error!', 'Error in BOT Creation Try with a Different BOT Name', 'error');
     }
   }
 
@@ -90,13 +92,14 @@ export class JoinComponent implements OnInit {
     const bots = localStorage.getItem('aiBots')
     try {
       if (users == "null" || users == "" && bots != null) {
-        swal('You Need to Have at leset One Player to Continue', "error");
+        swal('Error!', 'You Need to Have at leset One Player To Continue', 'error');
         this.spinnerstart = false;
       } else {
         await this.joinService.startGame();
       }
     } catch (error) {
       this.spinnerstart = false;
+      swal('Sorry!', 'We Are Unable To Start The Game!', 'error');
       alert(error);
     }
   }

@@ -47,7 +47,7 @@ export class AibotService {
   private companyWiseDataArrayList = [];
   private shareDetails = [];
   private aiBots: AIBot[];
-
+  spinnerstart: boolean = false;
   constructor(
     private http: Http,
     private cpuService: CpuPlayerService,
@@ -57,6 +57,7 @@ export class AibotService {
   public runBotMoves(aiBots: AIBot[]) {
     console.log(aiBots);
     this.aiBots = aiBots;
+    this.spinnerstart = true;
     aiBots.forEach(async (aiBot) => {
       await this.getSectorWiseData(aiBot);
     });
