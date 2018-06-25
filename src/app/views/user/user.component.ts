@@ -18,6 +18,8 @@ import { TransactionsServiceService } from "../../services/transactions-service.
 import { User } from "../../models/user";
 import { Stock } from "../../models/stock";
 import { Price } from "../../models/price";
+import { Sector } from "../../models/sector";
+import { SectorPrice } from "../../models/sectorprice";
 import swal from "sweetalert2";
 
 declare interface TableData {
@@ -35,10 +37,13 @@ export class UserComponent implements OnInit {
   public tableData3: TableData;
   private rowData: Observable<Stock[]>;
   private priceData: Observable<Price[]>;
+  private sectorpriceData: Observable<SectorPrice[]>;
+  private sectorData: Observable<Sector[]>;
   private rowData2: any;
   private currentRound: number;
   private currentHistory: History = null;
   private currentCompany: string;
+  private currentSector: string;
 
   constructor(
     private joinedDetailServiceService: JoinedDetailServiceService,
@@ -47,14 +52,27 @@ export class UserComponent implements OnInit {
     private gameServiceService: GameServiceService,
     private accountsService: AccountsService
   ) {
-    
+
+    //to get an Observable data
+    this.sectorData = this.simulatorServiceService.getSectorNames(
+      JSON.parse(localStorage.getItem("userData")).gameId
+    );
+    this.sectorData.subscribe(res => {
+      console.log("response", res);
+    });
+
     this.rowData = this.simulatorServiceService.getStockNames(
       this.currentRound
     );
+    /*this.sectorpriceData = this.simulatorServiceService.getSectorPriceVariable(
+      JSON.parse(localStorage.getItem("userData")).gameId,
+      this.currentSector
+    );
+
     this.priceData = this.simulatorServiceService.getPriceVariable(
       JSON.parse(localStorage.getItem("userData")).gameId,
       this.currentCompany
-    );
+    );*/
     let companyArray = this.simulatorServiceService.getStockNames(
       this.currentRound
     );
@@ -82,7 +100,18 @@ export class UserComponent implements OnInit {
       JSON.parse(localStorage.getItem("userData")).gameId,
       this.currentCompany
     );
-    console.log("end");
+    console.log("end1");
+  }
+
+  public changeCurrentSector(sector:Sector){
+    console.log("iniside the sector change", sector);
+    this.simulatorServiceService.changeCurrentSector(sector);
+    this.currentSector = JSON.parse(localStorage.getItem("currentSector"));
+    this.sectorpriceData = this.simulatorServiceService.getSectorPriceVariable(
+      JSON.parse(localStorage.getItem("userData")).gameId,
+      this.currentSector
+    );
+    console.log("end2");
   }
 
   ngOnInit() {}
