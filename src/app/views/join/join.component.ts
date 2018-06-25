@@ -7,13 +7,14 @@ import { JoinedDetailServiceService } from '../../services/joined-detail-service
 import { User } from '../../models/user';
 import { CpuComponent } from '../../cpu/cpu.component';
 import { AIBot } from '../../models/aibot';
+import swal from 'sweetalert2';
 
 @Component({ selector: 'app-join', templateUrl: './join.component.html', styleUrls: ['./join.component.scss'] })
 export class JoinComponent implements OnInit {
   model: any = {};
   loading = false;
-  spinner:boolean=false;
-  spinnerstart:boolean=false;
+  spinner: boolean = false;
+  spinnerstart: boolean = false;
   returnUrl: string;
   joined: boolean = false;
   playerName: string = null;
@@ -36,25 +37,25 @@ export class JoinComponent implements OnInit {
   ngOnInit() { }
 
   async login() {
-    this.spinner=true;
+    this.spinner = true;
     try {
       this.joinService.loggin(this.playerName).subscribe(res => {
-        this.spinner=false;
+        this.spinner = false;
         this.playerName = '';
         this.filled = false;
         this.userList = this.joinedDetailServiceService.getUsers();
       });
     } catch (error) {
-      this.spinner=false;
+      this.spinner = false;
       alert(error);
     }
   }
 
   async loginAIBot() {
-    this.spinner=true;
+    this.spinner = true;
     try {
       this.joinService.logginAIBot(this.playerName).subscribe(res => {
-        this.spinner=false;
+        this.spinner = false;
         this.playerName = '';
         this.filled = false;
         // this.aiBotList = this.joinedDetailServiceService.getUsers();
@@ -63,7 +64,7 @@ export class JoinComponent implements OnInit {
         console.log(this.aiBotList);
       });
     } catch (error) {
-      this.spinner=false;
+      this.spinner = false;
       alert(error);
     }
   }
@@ -84,11 +85,18 @@ export class JoinComponent implements OnInit {
   //   }
   // }
   async start() {
-    this.spinnerstart=true;
+    this.spinnerstart = true;
+    const users = localStorage.getItem('users');
+    const bots = localStorage.getItem('aiBots')
     try {
-      await this.joinService.startGame();
+      if (users == "null" || users == "" && bots != null) {
+        swal('You Need to Have at leset One Player to Continue', "error");
+        this.spinnerstart = false;
+      } else {
+        await this.joinService.startGame();
+      }
     } catch (error) {
-      this.spinnerstart=false;
+      this.spinnerstart = false;
       alert(error);
     }
   }

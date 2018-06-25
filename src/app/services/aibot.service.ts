@@ -238,7 +238,9 @@ export class AibotService {
     let accountBalance = localStorage.getItem('BOTaccountBalance');
     let stockPrice = localStorage.getItem('predictedPrice');
     let qty = investment / Number(stockPrice);
-    let purchaseValue = Number(stockPrice) * qty;
+    let formatterdQty = Math.floor(qty);
+    let purchaseValue = Number(stockPrice) * formatterdQty;
+    console.log('AI BOT IS BUYING ' + purchaseValue + ' QTY ' + Math.floor(qty) + ' ');
     this.getShareDetails();
     this
       .transactionsServiceService
@@ -261,9 +263,10 @@ export class AibotService {
     let accountBalance = localStorage.getItem('BOTaccountBalance');
     let stockPrice = localStorage.getItem('predictedPrice');
     let qty = investment / Number(stockPrice);
-    let purchaseValue = Number(stockPrice) * qty;
+    let formatterdQty = Math.floor(qty);
+    let purchaseValue = Number(stockPrice) * formatterdQty;
 
-    console.log('AI BOT IS SELLING ' + purchaseValue + ' QTY ' + qty + ' ');
+    console.log('AI BOT IS SELLING ' + purchaseValue + ' QTY ' + Math.floor(qty) + ' ');
 
     this.getShareDetails();
     this
