@@ -244,7 +244,7 @@ export class CpuComponent implements OnInit {
       .flatMap(response => {
         return this
           .brokerServiceService
-          .bTransaction('CPU', companyName, 30, 'buy', 105, 5);
+          .bTransaction('CPU', companyName, 30, 'buy', 105, '', 5);
       })
       .subscribe(data => {
         console.log(data);
@@ -262,7 +262,7 @@ export class CpuComponent implements OnInit {
       .flatMap(response => {
         return this
           .brokerServiceService
-          .bTransaction('CPU', companyName, 30, 'sell', 105, 5);
+          .bTransaction('CPU', companyName, 30, 'sell', 105, '', 5);
       })
       .subscribe(data => {
         console.log(data);
