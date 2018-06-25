@@ -54,7 +54,7 @@ export class SimulatorServiceService {
           .map((item,index) => {
             console.log(item);
             console.log(index);
-            return new Price(item,index);
+            return new Price(index,item);
           });
       });
   }

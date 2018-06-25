@@ -63,11 +63,7 @@ export class HomeComponent implements OnInit {
           .analystServiceService
           .getAnalystData(this.currentUser, value.currentRound, JSON.parse(localStorage.getItem('userData')).gameId);
       });
-      if(this.currentRound==5)
-      {
-        console.log("round eka ",this.currentRound);
-        this.endGame=true;
-      }
+      
 
     this.tableData1 = {
       headerRow: [
