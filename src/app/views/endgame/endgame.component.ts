@@ -9,7 +9,7 @@ import {SimulatorServiceService} from '../../services/simulator-service.service'
 export class EndgameComponent implements OnInit {
 
   constructor() { 
-    console.log("end game",JSON.parse(localStorage.getItem('userData')).currentRound);
+    console.log("end game round",JSON.parse(localStorage.getItem('userData')).currentRound);
   }
 
   ngOnInit() {
