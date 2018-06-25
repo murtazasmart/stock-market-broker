@@ -11,6 +11,7 @@ import { IconsComponent } from "./icons/icons.component";
 import { NotificationsComponent } from "./views/notifications/notifications.component";
 import { UpgradeComponent } from "./views/upgrade/upgrade.component";
 import { SharepriceComponent } from "./views/shareprice/shareprice.component";
+import { EndgameComponent } from "./views/endgame/endgame.component";
 import { CpuComponent } from "./cpu/cpu.component";
 /* 
 here defined routes and unwanted are commented
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: "icons", component: IconsComponent },
   { path: "notifications", component: NotificationsComponent },
   { path: "upgrade", component: UpgradeComponent },
+  { path: "finish", component: EndgameComponent },
   { path: "", redirectTo: "join", pathMatch: "full" }
 ];
 
@@ -34,4 +36,4 @@ const routes: Routes = [
   imports: [CommonModule, BrowserModule, RouterModule.forRoot(routes)],
   exports: []
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

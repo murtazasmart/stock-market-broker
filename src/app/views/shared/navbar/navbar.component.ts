@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit {
   private currentUser: User;
   private currentRound: number;
   private winner: Player;
+  isEndgame:boolean=false;
 
   constructor(
     location: Location,
@@ -66,10 +67,15 @@ export class NavbarComponent implements OnInit {
   }
 
   public async nextTurn() {
-    this.simulatorServiceService.makeNextTurn();
-    await this.gameServiceService.checkWinner();
-
-    this.changeRound();
+    
+    if (this.currentRound==19) {
+      this.router.navigate(["/finish"]);
+      this.isEndgame=true;
+    } else {
+      this.simulatorServiceService.makeNextTurn();
+      await this.gameServiceService.checkWinner();
+      this.changeRound();
+    }
   }
 
   public changeCurrentUser(user: User): void {
