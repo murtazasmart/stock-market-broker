@@ -20,6 +20,7 @@ import { Stock } from "../../models/stock";
 import { Price } from "../../models/price";
 import { Sector } from "../../models/sector";
 import { SectorPrice } from "../../models/sectorprice";
+import { StockPrice } from "../../models/stockprice";
 import swal from "sweetalert2";
 
 declare interface TableData {
@@ -39,6 +40,7 @@ export class UserComponent implements OnInit {
   private priceData: Observable<Price[]>;
   private sectorpriceData: Observable<SectorPrice[]>;
   private sectorData: Observable<Sector[]>;
+  private stockData:Observable<StockPrice[]>;
   private rowData2: any;
   private currentRound: number;
   private currentHistory: History = null;
@@ -91,12 +93,27 @@ export class UserComponent implements OnInit {
       headerRow: ["Round", "Price"],
       dataRows: null
     };
+    this.tableData2 = {
+      headerRow: ["Round", "Average Price"],
+      dataRows: null
+    };
   }
   public changeCurrentCompany(stock: Stock) {
     console.log("iniside the company change", stock);
     this.simulatorServiceService.changeCurrentCompany(stock);
     this.currentCompany = JSON.parse(localStorage.getItem("currentCompany"));
     this.priceData = this.simulatorServiceService.getPriceVariable(
+      JSON.parse(localStorage.getItem("userData")).gameId,
+      this.currentCompany
+    );
+    
+    console.log("end1");
+  }
+  public changeCurrentCompanyForStock(stock: Stock) {
+    console.log("iniside the company change", stock);
+    this.simulatorServiceService.changeCurrentCompany(stock);
+    this.currentCompany = JSON.parse(localStorage.getItem("currentCompany"));
+    this.stockData = this.simulatorServiceService.getStockPriceVariable(
       JSON.parse(localStorage.getItem("userData")).gameId,
       this.currentCompany
     );

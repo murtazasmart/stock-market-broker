@@ -22,6 +22,7 @@ import { Player } from "../../../models/player";
 export class NavbarComponent implements OnInit {
   private listTitles: any[];
   location: Location;
+  spinner:boolean=false;
   private toggleButton: any;
   private sidebarVisible: boolean;
   private userList: User[];
