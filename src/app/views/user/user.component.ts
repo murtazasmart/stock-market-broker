@@ -33,12 +33,12 @@ export class UserComponent implements OnInit {
   public tableData1: TableData;
   public tableData2: TableData;
   public tableData3: TableData;
-  private rowData : Observable < Stock[]>;
+  private rowData: Observable<Stock[]>;
   private priceData: Observable<Price[]>;
   private rowData2: any;
   private currentRound: number;
   private currentHistory: History = null;
-  private currentCompany:string;
+  private currentCompany: string;
 
   constructor(
     private joinedDetailServiceService: JoinedDetailServiceService,
@@ -48,31 +48,42 @@ export class UserComponent implements OnInit {
     private accountsService: AccountsService
   ) {
     
-    this.rowData=this.simulatorServiceService.getStockNames(this.currentRound);
-    let companyArray = this.simulatorServiceService.getStockNames(this.currentRound);
+    this.rowData = this.simulatorServiceService.getStockNames(
+      this.currentRound
+    );
+    this.priceData = this.simulatorServiceService.getPriceVariable(
+      JSON.parse(localStorage.getItem("userData")).gameId,
+      this.currentCompany
+    );
+    let companyArray = this.simulatorServiceService.getStockNames(
+      this.currentRound
+    );
     let companyLength = companyArray.length;
     console.log(companyLength);
-    console.log("companyArray",companyArray);
-    
-    
+    console.log("companyArray", companyArray);
+
     let companylist: string[] = [];
     companyArray.forEach(element => {
       companylist.push(element.company);
-      
     });
-    console.log("companylist",companylist);
+    console.log("companylist", companylist);
     localStorage.setItem("companyList", JSON.stringify(companylist));
 
-    
+    this.tableData1 = {
+      headerRow: ["Round", "Price"],
+      dataRows: null
+    };
   }
-  public async changeCurrentCompany(stock: Stock){
-    console.log('iniside the company change', stock);
+  public changeCurrentCompany(stock: Stock) {
+    console.log("iniside the company change", stock);
     this.simulatorServiceService.changeCurrentCompany(stock);
-    this.currentCompany=JSON.parse(localStorage.getItem('currentCompany'))
-    await this.simulatorServiceService.getPriceVariable(JSON.parse(localStorage.getItem("userData")).gameId,this.currentCompany);
+    this.currentCompany = JSON.parse(localStorage.getItem("currentCompany"));
+    this.priceData = this.simulatorServiceService.getPriceVariable(
+      JSON.parse(localStorage.getItem("userData")).gameId,
+      this.currentCompany
+    );
     console.log("end");
   }
-  
 
   ngOnInit() {}
 }

@@ -45,12 +45,16 @@ export class SimulatorServiceService {
       .map(res => {
         console.log(res.json());
         console.log('price Vaiables');
-        return res
-          .json()
-          .map(item => {
-            console.log(item.round);
-            console.log(item.price);
-            return new Price(item.round, item.price);
+        const obj=res.json();
+        
+        let array1=Object.keys(obj).map(function (k){return obj[k]});
+        console.log('price Vaiables2');
+        console.log(array1);
+        return array1
+          .map((item,index) => {
+            console.log(item);
+            console.log(index);
+            return new Price(item,index);
           });
       });
   }

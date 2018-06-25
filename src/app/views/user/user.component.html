@@ -39,6 +39,22 @@
                 </div>
 
             </div>
+            <div class="col-md-6">
+                <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th *ngFor="let cell of tableData1.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
+                            </tr>
+                        </thead>
+                        <tbody style="height: 500px; overflow: auto;">
+                            <tr *ngFor="let row of priceData | async">
+                                <td style="color:#44c5ac">{{row.price}}</td>
+                                <td>{{row.round}}</td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
         </div>
     </div>
 </div>
