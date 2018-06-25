@@ -19,9 +19,9 @@
                                 <div class="form-group">
                                     <app-spinner *ngIf="spinner"></app-spinner>
                                     <button class="btn btn-success" type="submit" (click)="login()" [disabled]="formCtrl.form.invalid">JOIN</button>
-                                    <button class="btn btn-success" type="submit" (click)="addBot()" [disabled]="formCtrl.form.invalid">ADD BOT</button>
-                                    <button class="btn btn-success" (click)="start()" [disabled]="filled">start Game</button>
+
                                     <button class="btn btn-danger" (click)="clear()" [disabled]="filled">Clear</button>
+                                    <button class="btn btn-info" [disabled]="filled">ADD BOT</button>
                                 </div>
                             </div>
 
@@ -30,10 +30,11 @@
                                     <div *ngFor="let user of userList" style="padding-bottom: 10px;">
 
                                         <div class="chip">
-                                            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Person" width="96" height="96"> {{user.Name}}
+                                            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Person" width="96" height="96">                                            {{user.Name}}
                                         </div>
                                     </div>
-
+                                    <app-spinner *ngIf="spinnerstart"></app-spinner>
+                                    <button class="btn btn-warning" (click)="start()" [disabled]="filled" style="float :right;">start Game</button>
                                 </div>
                             </div>
                         </div>

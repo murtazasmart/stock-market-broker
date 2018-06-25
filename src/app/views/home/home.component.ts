@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
   public tableData3 : TableData;
   spinnerbuy : boolean = false;
   spinnersell : boolean = false;
+  endGame:boolean=false;
   private currentUser : User = null;
   private rowData : Observable < Trend[] >;
   private userBalance : Observable < any >;
@@ -57,11 +58,12 @@ export class HomeComponent implements OnInit {
         console.log(value);
         this.rowData2 = value.round.stocks;
         this.currentRound = value.currentRound;
-
+        
         this.rowData = this
           .analystServiceService
           .getAnalystData(this.currentUser, value.currentRound, JSON.parse(localStorage.getItem('userData')).gameId);
       });
+      
 
     this.tableData1 = {
       headerRow: [
@@ -185,7 +187,7 @@ export class HomeComponent implements OnInit {
         this.spinnerbuy = true;
         return this
           .brokerServiceService
-          .bTransaction(Name, stock, quantity, 'buy', stockPrice, this.currentRound);
+          .bTransaction(Name, stock, quantity, 'buy', stockPrice,JSON.parse(localStorage.getItem('userData')).gameId, this.currentRound);
       })
       .subscribe(data => {
         console.log(data);
@@ -205,7 +207,7 @@ export class HomeComponent implements OnInit {
     console.log(stockPrice);
     this
       .brokerServiceService
-      .bTransaction(Name, company, quantity, 'sell', stockPrice, this.currentRound)
+      .bTransaction(Name, company, quantity, 'sell', stockPrice,JSON.parse(localStorage.getItem('userData')).gameId, this.currentRound)
       .flatMap(response => {
         this.spinnersell = false;
         return this

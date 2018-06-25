@@ -10,7 +10,8 @@ import { User } from '../../models/user';
 export class JoinComponent implements OnInit {
   model: any = {};
   loading = false;
-  spinner: boolean = false;
+  spinner:boolean=false;
+  spinnerstart:boolean=false;
   returnUrl: string;
   joined: boolean = false;
   playerName: string = null;
@@ -32,16 +33,16 @@ export class JoinComponent implements OnInit {
   ngOnInit() { }
 
   async login() {
-    this.spinner = true;
+    this.spinner=true;
     try {
       this.joinService.loggin(this.playerName).subscribe(res => {
-        this.spinner = false;
+        this.spinner=false;
         this.playerName = '';
         this.filled = false;
         this.userList = this.joinedDetailServiceService.getUsers();
       });
     } catch (error) {
-      this.spinner = false;
+      this.spinner=false;
       alert(error);
     }
   }
@@ -62,11 +63,11 @@ export class JoinComponent implements OnInit {
   //   }
   // }
   async start() {
-    this.spinner = true;
+    this.spinnerstart=true;
     try {
       await this.joinService.startGame();
     } catch (error) {
-      this.spinner = false;
+      this.spinnerstart=false;
       alert(error);
     }
   }

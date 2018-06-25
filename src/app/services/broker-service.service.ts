@@ -14,6 +14,7 @@ export class BrokerServiceService {
     quantity: number,
     type: string,
     price: number,
+    gameId:string,
     turn: number
   ): Observable<Response> {
     return this.http.post('https://hidden-badlands-21838.herokuapp.com/api/transaction/', {
@@ -22,6 +23,7 @@ export class BrokerServiceService {
       quantity,
       type,
       price,
+      gameId,
       turn
     });
   }

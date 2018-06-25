@@ -1,30 +1,59 @@
-<div class="main-content" >
+<div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            
-            <div class="col-md-8" style="padding-left: 20%;">
-                <div class="card card-user">
-                    <div class="image">
-                        <img src="assets/img/profiler.jpg" alt="..."/>
-                    </div>
-                    <div class="content">
-                        <div class="author">
-                            <a href="#">
-                                <img class="avatar border-gray" src="assets/img/faces/face-0.jpg" alt="..."/>
 
-                                <h4 class="title">{{currentUser.Name}}<br />
-                                    <small>PORTFOLIO</small>
-                                </h4>
+            <div class="col-md-12" >
+                <div class="col-md-8">
+                    <ul class="nav navbar-nav navbar-left">
+                        
+                       
+                        <li class="dropdown">
+                            <p style="font-size: 16pt;top:5px; color: #484848;">Select the Stock Name</p>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                                <i class="fa fa-home" style="font-size: 20pt;top:7px;"></i>
+                                <b class="caret"></b>
+                                <span class="notification">{{rowData.length}}</span>
+                                <p class="hidden-lg hidden-md">
+                                    {{rowData.length}} companies
+                                    <b class="caret"></b>
+                                </p>
                             </a>
-                        </div>
-                        <p class="description text-center"> "Lamborghini Mercy <br>
-                            Your chick she so thirsty <br>
-                            I'm in that two seat Lambo"
-                        </p>
-                    </div>
-                    <hr>
-                    
+                            <ul class="dropdown-menu">
+
+                                <li *ngFor="let row of rowData">
+                                    <a (click)="changeCurrentCompany(row)">{{row.company}}</a>
+
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+
                 </div>
+                <div class="col-md-4">
+                        <p class="category" style="color: #484848;font-size: 12pt;">Selected Company: <p>
+                           <p style="color:#F94C4C;font-size: 12pt;"> {{currentCompany}}</p>
+                           
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th *ngFor="let cell of tableData1.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
+                            </tr>
+                        </thead>
+                        <tbody style="height: 500px; overflow: auto;">
+                            <tr *ngFor="let row of priceData | async">
+                                <td style="color:#44c5ac">{{row.round}}</td>
+                                <td>{{row.price}}</td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
             </div>
         </div>
     </div>

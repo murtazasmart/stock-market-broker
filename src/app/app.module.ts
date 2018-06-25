@@ -32,6 +32,8 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { SpinnerComponent } from './views/spinner/spinner.component';
 import { CpuComponent } from './cpu/cpu.component'
 import { CpuPlayerService } from './services/cpu-player.service';
+import { AccountsService } from "./services/accounts.service";
+import { EndgameComponent } from './views/endgame/endgame.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,8 +47,8 @@ import { CpuPlayerService } from './services/cpu-player.service';
     JoinComponent,
     SharepriceComponent,
     SpinnerComponent,
-    CpuComponent
-
+    CpuComponent,
+    EndgameComponent
   ],
   imports: [
     BrowserModule,
@@ -68,9 +70,9 @@ import { CpuPlayerService } from './services/cpu-player.service';
     SimulatorServiceService,
     GameServiceService,
     CpuPlayerService,
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
-
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    AccountsService,
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
