@@ -4,6 +4,8 @@ import { Http, Response } from '@angular/http';
 import { CpuPlayerService } from '../services/cpu-player.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from "rxjs/Observable";
+import { TransactionsServiceService } from '../services/transactions-service.service';
+import { BrokerServiceService } from '../services/broker-service.service';
 
 
 @Component({
@@ -54,7 +56,12 @@ export class CpuComponent implements OnInit {
   private companyWiseDataArrayList = [];
   private shareDetails = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: Http, private cpuService: CpuPlayerService) {
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private http: Http,
+    private cpuService: CpuPlayerService,
+    private transactionsServiceService: TransactionsServiceService,
+    private brokerServiceService: BrokerServiceService) {
     this.getSectorWiseData();
   }
 
@@ -145,11 +152,13 @@ export class CpuComponent implements OnInit {
 
   async getAcountBalance() {
     let accountDetails = await this.cpuService.getAccountBalance();
+    localStorage.setItem('BOTaccountBalance', accountDetails.balace);
     let balancePercentage = (accountDetails.balace / 1000) * 100;
-    if (balancePercentage >= 20) {
-      this.investOn();
+    let twentyPercent = (accountDetails.balace / 100) * 20
+    if (balancePercentage >= 20 && accountDetails.balace > 200) {
+      this.investOn(accountDetails.accountNumber, twentyPercent);
     } else {
-      this.sellShares();
+      this.sellShares(accountDetails.accountNumber);
     }
   }
 
@@ -218,17 +227,47 @@ export class CpuComponent implements OnInit {
         company = element.companyName
       }
     });
+    localStorage.setItem('predictedPrice', String(highestPrice));
     return company;
   }
 
-  investOn() {
+  investOn(accountNumber, investment) {
     let companyName = localStorage.getItem('prediction');
+    let accountBalance = localStorage.getItem('BOTaccountBalance');
+    let stockPrice = localStorage.getItem('predictedPrice');
+    let qty = investment / Number(stockPrice);
+    let purchaseValue = Number(stockPrice) * qty;
     this.getShareDetails();
-    console.log('Investing ON ' + localStorage.getItem('prediction'));
+    this
+      .transactionsServiceService
+      .transaction('debit', String(purchaseValue), accountNumber, 'buying')
+      .flatMap(response => {
+        return this
+          .brokerServiceService
+          .bTransaction('CPU', companyName, 30, 'buy', 105, 5);
+      })
+      .subscribe(data => {
+        console.log(data);
+        console.log('Success!', 'you have succefully bought!', 'success')
+      });
   }
 
-  sellShares() {
-
+  sellShares(accountNumber) {
+    let companyName = localStorage.getItem('prediction');
+    let accountBalance = localStorage.getItem('BOTaccountBalance');
+    this.getShareDetails();
+    this
+      .transactionsServiceService
+      .transaction('credit', '3500', accountNumber, 'buying')
+      .flatMap(response => {
+        return this
+          .brokerServiceService
+          .bTransaction('CPU', companyName, 30, 'sell', 105, 5);
+      })
+      .subscribe(data => {
+        console.log(data);
+        console.log('Success!', 'you have succefully bought!', 'success')
+      });
   }
 
   async getShareDetails() {
