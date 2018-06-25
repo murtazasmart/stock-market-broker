@@ -24,12 +24,14 @@ import { AibotService } from "../../../services/aibot.service";
 export class NavbarComponent implements OnInit {
   private listTitles: any[];
   location: Location;
+  spinner:boolean=false;
   private toggleButton: any;
   private sidebarVisible: boolean;
   private userList: User[];
   private currentUser: User;
   private currentRound: number;
   private winner: Player;
+  isEndgame:boolean=false;
 
   constructor(
     location: Location,
@@ -69,12 +71,17 @@ export class NavbarComponent implements OnInit {
   }
 
   public async nextTurn() {
-    let aiBotUserList = JSON.parse(localStorage.getItem("aiBots"));
-    await this.aiBotService.runBotMoves(aiBotUserList);
     
-    this.simulatorServiceService.makeNextTurn();
-    await this.gameServiceService.checkWinner();
-    this.changeRound();
+    if (this.currentRound==19) {
+      this.router.navigate(["/finish"]);
+      this.isEndgame=true;
+    } else {
+      let aiBotUserList = JSON.parse(localStorage.getItem("aiBots"));
+      await this.aiBotService.runBotMoves(aiBotUserList);
+      this.simulatorServiceService.makeNextTurn();
+      await this.gameServiceService.checkWinner();
+      this.changeRound();
+    }
   }
 
   public changeCurrentUser(user: User): void {
