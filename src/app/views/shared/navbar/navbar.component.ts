@@ -71,6 +71,7 @@ export class NavbarComponent implements OnInit {
   }
 
   public async nextTurn() {
+    //when click on next for both AI and normal player
     if (this.currentRound == 19) {
       this.router.navigate(["/finish"]);
       this.isEndgame = true;
