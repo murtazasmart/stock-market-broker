@@ -68,9 +68,9 @@ export class CpuPlayerService {
       });
   }
 
-  public getAccountBalance() {
+  public getAccountBalance(accountNo) {
     return this.http
-      .get('https://exithost.000webhostapp.com/bank/balance/10001')
+      .get('https://exithost.000webhostapp.com/bank/balance/'+accountNo)
       .toPromise().then((res) => {
         console.log(res.json());
         return res.json();

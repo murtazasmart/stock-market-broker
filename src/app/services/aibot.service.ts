@@ -150,36 +150,47 @@ export class AibotService {
   }
 
   async getAcountBalance(aiBot: AIBot) {
-    let accountDetails = await this.cpuService.getAccountBalance();
+    // console.log('getBal' + JSON.stringify(aiBot));
+    let accountDetails = await this.cpuService.getAccountBalance(aiBot.accountNumber);
     localStorage.setItem('BOTaccountBalance', accountDetails.balace);
     let balancePercentage = (accountDetails.balace / 1000) * 100;
     let twentyPercent = (accountDetails.balace / 100) * 20
+    console.log('twnty' + twentyPercent + 'balnce ' + accountDetails.balace);
     if (balancePercentage >= 20 && accountDetails.balace > 200) {
       this.investOn(aiBot, accountDetails.accountNumber, twentyPercent);
-      console.log('AI BOT PLAYER INVESTS');
+      console.log('AI BOT PLAYER INVESTS' + accountDetails.accountNumber);
     } else {
       this.sellShares(aiBot, accountDetails.accountNumber, twentyPercent);
-      console.log('AI BOT PLAYER SELLS');
+      console.log('AI BOT PLAYER SELLS' + accountDetails.accountNumber);
     }
   }
 
   dressData(arrayOfData) {
+    console.log('arrayOfData' + JSON.stringify(arrayOfData));
     arrayOfData.forEach((row) => {
-      this.lastRound = row[0].round;
+      this.lastRound = row[row.length - 1].round;
       row.forEach(element => {
         switch (element.companyName) {
           case '99X PLC':
-            this.Technology1X.push(this.f(element.round));
-            this.Technology1y.push(this.f(element.stockPrice[0]));
+            for (let x = 0; x < Number(this.lastRound); x++) {
+              this.Technology1X.push(this.f(element.round));
+              this.Technology1y.push(this.f(element.stockPrice[x]));
+            }
           case 'Virtusa PLC':
-            this.Technology2X.push(this.f(element.round));
-            this.Technology2y.push(this.f(element.stockPrice[0]));
+            for (let x = 0; x < Number(this.lastRound); x++) {
+              this.Technology2X.push(this.f(element.round));
+              this.Technology2y.push(this.f(element.stockPrice[x]));
+            }
           case 'WSO2 PLC':
-            this.Technology3X.push(this.f(element.round));
-            this.Technology3y.push(this.f(row[0].stockPrice[0]));
+            for (let x = 0; x < Number(this.lastRound); x++) {
+              this.Technology3X.push(this.f(element.round));
+              this.Technology3y.push(this.f(element.stockPrice[x]));
+            }
           case 'IFS PLC':
-            this.Technology4X.push(this.f(element.round));
-            this.Technology4y.push(this.f(element.stockPrice[0]));
+            for (let x = 0; x < Number(this.lastRound); x++) {
+              this.Technology4X.push(this.f(element.round));
+              this.Technology4y.push(this.f(element.stockPrice[x]));
+            }
         }
       });
     });
@@ -220,6 +231,7 @@ export class AibotService {
   }
 
   makeDecision() {
+    console.log('decision making accessed' + JSON.stringify(this.predictionArray));
     let highestPrice = 0;
     let company;
     this.predictionArray.forEach(element => {
@@ -240,8 +252,11 @@ export class AibotService {
     let stockPrice = localStorage.getItem('predictedPrice');
     let qty = investment / Number(stockPrice);
     let formatterdQty = Math.floor(qty);
+    if (formatterdQty == 0) {
+      this.sellShares(aiBot, accountNumber, investment);
+    }
     let purchaseValue = Number(stockPrice) * formatterdQty;
-    console.log('AI BOT IS BUYING ' + purchaseValue + ' QTY ' + Math.floor(qty) + ' ');
+    console.log('AI BOT IS BUYING ' + purchaseValue + ' QTY ' + Math.floor(qty) + ' STOCK PRICE IS ' + stockPrice);
     this.getShareDetails();
     this
       .transactionsServiceService
@@ -264,10 +279,10 @@ export class AibotService {
     let accountBalance = localStorage.getItem('BOTaccountBalance');
     let stockPrice = localStorage.getItem('predictedPrice');
     let qty = investment / Number(stockPrice);
-    let formatterdQty = Math.floor(qty);
+    let formatterdQty = Math.round(qty);
     let purchaseValue = Number(stockPrice) * formatterdQty;
 
-    console.log('AI BOT IS SELLING ' + purchaseValue + ' QTY ' + Math.floor(qty) + ' ');
+    console.log('AI BOT IS SELLING ' + purchaseValue + ' QTY ' + Math.round(qty) + ' ');
 
     this.getShareDetails();
     this
