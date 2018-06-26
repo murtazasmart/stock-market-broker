@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
     <base href="/">
     <meta charset="utf-8" />
@@ -15,12 +16,14 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Animation library for notifications   -->
-    <link href="assets/css/animate.min.css" rel="stylesheet"/>
+    <link href="assets/css/animate.min.css" rel="stylesheet" />
 
-    <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+    <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet" />
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 
 
     <!--     Fonts and icons     -->
@@ -28,10 +31,73 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 </head>
+
 <body>
-  <app-root>
-      <div id="loader"><img src="assets/img/loader-preview.svg" alt="loading"></div>
-  </app-root>
+    <app-root>
+        <div id="loader">
+            <img src="assets/img/loader-preview.svg" alt="loading">
+        </div>
+    </app-root>
 </body>
+
+<script>
+    var userData = JSON.parse(localStorage.getItem('userData'));
+    $.get("https://stock-market-simulator.herokuapp.com/api/v1/game/sectors/history?id=" + userData.gameId, function (sectorData) {
+        // $(".result").html(sectorData);
+        $.get("https://stock-market-simulator.herokuapp.com/api/v1/game/sectors?id=" + userData.gameId, function (sectors) {
+            // $(".result").html(sectors);
+            console.log("alert", sectorData)
+            var rounds;
+            var chartDataSet = []
+            sectors.forEach((sector) => {
+                rounds = Object.keys(sector);
+                var dataset = {}
+                dataset["label"] = sector;
+                var ydata = [];
+                console.log(sectorData[sector])
+                $.each(sectorData[sector], function (key, value) {
+                    ydata.push(value);
+                });
+                dataset["data"] = ydata;
+                // dataset[backgroundColor] = 
+                chartDataSet.push(dataset);
+            });
+            var ctx = document.getElementById('sectorChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: rounds,
+                    datasets: chartDataSet,
+                }
+            });
+        });
+    });
+
+    $.get("https://stock-market-simulator.herokuapp.com/api/v1/game/market/history?id=" + userData.gameId, function (marketData) {
+        // $(".result").html(sectorData);
+        // $(".result").html(sectors);
+        console.log("alert", marketData)
+        var rounds = Object.keys(marketData);
+        console.log(rounds);
+        var chartDataSet = {};
+        var dataset = [];
+        $.each(marketData, (key, value) => {
+            dataset.push(value);
+        });
+        var ctx = document.getElementById('marketChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: rounds,
+                datasets: [{
+                    label: "market",
+                    data: dataset,
+                }],
+            }
+        });
+
+    });
+
+</script>
 
 </html>

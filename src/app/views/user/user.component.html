@@ -42,6 +42,7 @@
 
 
                         <li class="dropdown">
+                            Please refresh web browser(F5) to update charts
                             <p style="font-size: 16pt;top:5px; color: #484848;">Select the Sector Name (Average Sector Prices)</p>
                             <div class="selectcompany">
                                 <p class="category" style="color: #484848;font-size: 12pt;">Selected Sector: </p>
@@ -144,32 +145,37 @@
 
                 </div>
                 <div class="col-md-6">
-                <p style="font-size: 16pt;top:5px; color: #484848;">Average Stock Prices</p>
-                <div class="selectcompany">
-                                <p class="category" style="color: #484848;font-size: 12pt;">Selected Company: </p>
-                                <p style="color:#F94C4C;font-size: 12pt;"> {{currentCompany}}</p>
-                            </div>
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th *ngFor="let cell of tableData2.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
-                        </tr>
-                    </thead>
-                    <tbody style="height:100px; overflow:scroll;">
-                        <tr *ngFor="let row of stockData | async">
-                            <td style="color:#44c5ac">{{row.round}}</td>
-                            <td>{{row.price}}</td>
+                    <p style="font-size: 16pt;top:5px; color: #484848;">Average Stock Prices</p>
+                    <div class="selectcompany">
+                        <p class="category" style="color: #484848;font-size: 12pt;">Selected Company: </p>
+                        <p style="color:#F94C4C;font-size: 12pt;"> {{currentCompany}}</p>
+                    </div>
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th *ngFor="let cell of tableData2.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
+                            </tr>
+                        </thead>
+                        <tbody style="height:100px; overflow:scroll;">
+                            <tr *ngFor="let row of stockData | async">
+                                <td style="color:#44c5ac">{{row.round}}</td>
+                                <td>{{row.price}}</td>
 
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
 
         </div>
         <div class="row">
-            
+            <div class="col-md-6">
+                <canvas id="sectorChart"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="marketChart"></canvas>
+            </div>
 
         </div>
     </div>
