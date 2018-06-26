@@ -23,7 +23,6 @@ export class JoinServiceService {
       .get('https://stock-market-bank-service.herokuapp.com/bank/account')
       .subscribe(response => {
         const account: any = response.json();
-        console.log("all accounts",response.json());
         if (account != null) {
           this
             .http
@@ -41,7 +40,6 @@ export class JoinServiceService {
                 this
                   .router
                   .navigate(['/dashboard']);
-                console.log(userData);
               }
 
             } //check account is null
@@ -64,7 +62,6 @@ export class JoinServiceService {
         this.http.get("https://hidden-badlands-21838.herokuapp.com/api/transaction/delete/all").subscribe(response=>{
           const res:any=response.json();
         });
-        console.log('startGame', responseStart);
       })
 
   }
@@ -98,11 +95,9 @@ export class JoinServiceService {
         })
       .map(response => {
         const decodedBankAccount: any = response.json();
-        console.log('create join', decodedBankAccount);
         if (decodedBankAccount.Name === name) {
           const user: User = decodedBankAccount;
           this.joinedDetailServiceService.addUser(user);
-          console.log(this.joinedDetailServiceService.getUsers());
         }
       })
 
@@ -118,43 +113,26 @@ export class JoinServiceService {
         })
       .map(response => {
         const decodedBankAccount: any = response.json();
-        console.log('create join', decodedBankAccount);
         if (decodedBankAccount.Name === name) {
           const aiBot: AIBot = decodedBankAccount;
           this.joinedDetailServiceService.addAIBot(aiBot);
-          console.log(this.joinedDetailServiceService.getAIBots());
         }
       })
 
   }
 
   public getAllLoggedUsers() : Promise<Users[]> {
-    //console.log('success', history.name, history.turn, gameId);
-    console.log('https://stock-market-bank-service.herokuapp.com/bank/account');
     return this
       .http
       .get('https://stock-market-bank-service.herokuapp.com/bank/account'
       ).toPromise().then((res) => {
         const data = res.json();
-        console.log(data);
-        console.log('get all logged users');
         return res
           .json()
           .map(item => {
             return new Users(item.name,item.accountNumber);
           });
-      })
-      // .map(res => {
-      //   const data = res.json();
-      //   console.log(data);
-      //   console.log('get all logged users');
-      //   return res
-      //     .json()
-      //     .map(item => {
-      //       return new Users(item.name,item.accountNumber);
-      //     });
-      // });
+      });
   }
-  
 
 }

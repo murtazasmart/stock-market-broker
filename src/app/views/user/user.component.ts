@@ -79,14 +79,11 @@ export class UserComponent implements OnInit {
       this.currentRound
     );
     let companyLength = companyArray.length;
-    console.log(companyLength);
-    console.log("companyArray", companyArray);
 
     let companylist: string[] = [];
     companyArray.forEach(element => {
       companylist.push(element.company);
     });
-    console.log("companylist", companylist);
     localStorage.setItem("companyList", JSON.stringify(companylist));
 
     this.tableData1 = {
@@ -99,36 +96,29 @@ export class UserComponent implements OnInit {
     };
   }
   public changeCurrentCompany(stock: Stock) {
-    console.log("iniside the company change", stock);
     this.simulatorServiceService.changeCurrentCompany(stock);
     this.currentCompany = JSON.parse(localStorage.getItem("currentCompany"));
     this.priceData = this.simulatorServiceService.getPriceVariable(
       JSON.parse(localStorage.getItem("userData")).gameId,
       this.currentCompany
     );
-    
-    console.log("end1");
   }
   public changeCurrentCompanyForStock(stock: Stock) {
-    console.log("iniside the company change", stock);
     this.simulatorServiceService.changeCurrentCompany(stock);
     this.currentCompany = JSON.parse(localStorage.getItem("currentCompany"));
     this.stockData = this.simulatorServiceService.getStockPriceVariable(
       JSON.parse(localStorage.getItem("userData")).gameId,
       this.currentCompany
     );
-    console.log("end1");
   }
 
   public changeCurrentSector(sector:Sector){
-    console.log("iniside the sector change", sector);
     this.simulatorServiceService.changeCurrentSector(sector);
     this.currentSector = JSON.parse(localStorage.getItem("currentSector"));
     this.sectorpriceData = this.simulatorServiceService.getSectorPriceVariable(
       JSON.parse(localStorage.getItem("userData")).gameId,
       this.currentSector
     );
-    console.log("end2");
   }
 
   ngOnInit() {}

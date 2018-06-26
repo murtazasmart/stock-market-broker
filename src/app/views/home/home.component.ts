@@ -47,7 +47,6 @@ export class HomeComponent implements OnInit {
       .currentUser
       .subscribe(value => {
         this.currentUser = value;
-        console.log(value);
         this.uiChange();
       });
 
@@ -56,7 +55,6 @@ export class HomeComponent implements OnInit {
       .simulatorServiceService
       .userDetails
       .subscribe(value => {
-        console.log(value);
         this.rowData2 = value.round.stocks;
         this.currentRound = value.currentRound;
         
@@ -174,7 +172,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {}
 
   public buyShare(price : any, stock : string, quantity : number) {
-    console.log(price, stock, quantity);
 
     this.spinnerbuy = true;
     const {accountNumber, Name} = this.currentUser;
@@ -182,7 +179,6 @@ export class HomeComponent implements OnInit {
     const stockPrice = this
       .simulatorServiceService
       .getCurrentStockPrices(stock); // using price is also equal
-    console.log(stockPrice);
     this
       .transactionsServiceService
       .transaction('debit', String(stockPrice * quantity), String(accountNumber), 'buying')
@@ -193,7 +189,6 @@ export class HomeComponent implements OnInit {
           .bTransaction(Name, stock, quantity, 'buy', stockPrice,JSON.parse(localStorage.getItem('userData')).gameId, this.currentRound);
       })
       .subscribe(data => {
-        console.log(data);
         this.spinnerbuy = false;
         swal('Success!', 'you have succefully bought!', 'success')
         this.uiChange();
@@ -201,13 +196,11 @@ export class HomeComponent implements OnInit {
   }
 
   public sellShare(price : any, company : string, quantity : number) {
-    console.log(price, company, quantity);
     this.spinnersell = true;
     const {accountNumber, Name} = this.currentUser;
     const stockPrice = this
       .simulatorServiceService
       .getCurrentStockPrices(company);
-    console.log(stockPrice);
     this
       .brokerServiceService
       .bTransaction(Name, company, quantity, 'sell', stockPrice,JSON.parse(localStorage.getItem('userData')).gameId, this.currentRound)
@@ -219,7 +212,6 @@ export class HomeComponent implements OnInit {
 
       })
       .subscribe(data => {
-        console.log(data);
         this.spinnersell = false;
         swal('Success!', 'you have succefully sold a stock!', 'success')
         this.uiChange();

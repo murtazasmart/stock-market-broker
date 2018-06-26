@@ -31,7 +31,6 @@ export class JoinedDetailServiceService {
 
   public addUser(user: User): void {
     const users = this.getPersistUsers() || [];
-    console.log(users)
     users.push(user);
     this.setUsersPersist(users);
     this.currentUserSubject.next(user);
@@ -40,7 +39,6 @@ export class JoinedDetailServiceService {
 
   public addAIBot(aiBot: AIBot): void {
     const aiBots = this.getPersistAIBots() || [];
-    console.log(aiBots)
     aiBots.push(aiBot);
     this.setAIBotPersist(aiBots);
     // this.currentUserSubject.next(aiBot);
@@ -60,9 +58,7 @@ export class JoinedDetailServiceService {
   }
 
   public setAIBotPersist(aiBots): void {
-    console.log(aiBots);
     localStorage.setItem('aiBots', JSON.stringify(aiBots));
-    console.log(JSON.parse(localStorage.getItem('aiBots')));
   }
 
   public getPersistUsers(): User[] {

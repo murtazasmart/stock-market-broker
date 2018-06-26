@@ -9,7 +9,6 @@ export class LeaderboardService {
     private http: Http,
     private joinServiceService: JoinServiceService
   ) {
-    console.log("Meee");
    }
 
   public getData(): Promise<any> {
@@ -20,14 +19,12 @@ export class LeaderboardService {
         promiseArr.push(this.http.get(" https://stock-market-bank-service.herokuapp.com/bank/balance/" + user.accountNumber).toPromise());
       });
       Promise.all(promiseArr).then((bankBalanceResults) => {
-        console.log("bank results", bankBalanceResults);
         bankBalanceResults = JSON.parse(JSON.stringify(bankBalanceResults));
         const promiseArr2 = [];
         users.forEach((user) => {
           promiseArr2.push(this.http.get("https://hidden-badlands-21838.herokuapp.com/api/transaction/value/portfolio/" + user.name).toPromise());
         });
         Promise.all(promiseArr2).then((portfolioResults) => {
-        console.log("portfolio results", portfolioResults);
           const resultObject = []
           users.forEach((user) => {
             // const bankBalance = bankBalanceResults.find(x => x.accountNumber === user.accountNumber);
