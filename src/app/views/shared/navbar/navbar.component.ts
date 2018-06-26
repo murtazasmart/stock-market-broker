@@ -152,5 +152,6 @@ export class NavbarComponent implements OnInit {
     this.joinedDetailServiceService.clearUserData();
 
     this.router.navigate(["/join"]);
+    location.reload();
   }
 }
