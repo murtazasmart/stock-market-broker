@@ -249,7 +249,7 @@ export class AibotService {
       .flatMap(response => {
         return this
           .brokerServiceService
-          .bTransaction(aiBot.Name, companyName, qty, 'buy', Number(stockPrice), gameId, currentRound);
+          .bTransaction(aiBot.Name, companyName, formatterdQty, 'buy', Number(stockPrice), gameId, currentRound);
       })
       .subscribe(data => {
         console.log(data);
@@ -276,7 +276,7 @@ export class AibotService {
       .flatMap(response => {
         return this
           .brokerServiceService
-          .bTransaction(aiBot.Name, companyName, qty, 'sell', Number(stockPrice), gameId, currentRound);
+          .bTransaction(aiBot.Name, companyName, formatterdQty, 'sell', Number(stockPrice), gameId, currentRound);
       })
       .subscribe(data => {
         console.log(data);
