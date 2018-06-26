@@ -28,6 +28,7 @@ import { TransactionsServiceService } from './services/transactions-service.serv
 import { BrokerServiceService } from './services/broker-service.service';
 import { SimulatorServiceService } from './services/simulator-service.service'
 import { GameServiceService } from './services/game-service.service'
+import { LeaderboardService } from './services/leaderboard.service';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { SpinnerComponent } from './views/spinner/spinner.component';
 import { CpuComponent } from './cpu/cpu.component'
@@ -76,6 +77,7 @@ import { LeaderboardComponent } from './views/leaderboard/leaderboard.component'
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     AccountsService,
     AibotService,
+    LeaderboardService,
   ],
   bootstrap: [AppComponent]
 })

@@ -4,6 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+                <app-spinner *ngIf="spinner"></app-spinner>
                 <div class="card">
                     <div class="header">
                         <h4 class="title">Leadership Board</h4>
@@ -17,14 +18,12 @@
                             </tr>
                         </thead>
                         <tbody style="height: 500px; overflow: auto;">
-                            <tr *ngFor="let row of rowData2 | async" class="active">
-                                <td style="color:#44c5ac">{{row.name}}</td>
-<!--                                <td>{{row.stock}}</td>
-                                <td>{{row.quantity}}</td>
-                                <td style="color: #f90e2d;font-size: 12pt;">{{row.type}}</td>
-                                
-                                <td>{{row.turn}}</td>
-                                <td>{{row.price}}</td>-->
+                            <tr *ngFor="let row of LeaderboardResult" class="active">
+                                <td style="color:#484848">{{row.playerName}}</td>
+                                <td>{{row.bankBalance}}</td>
+                                <td>{{row.portfolioValue}}</td>
+                                <td style="color: #f90e2d;font-size: 12pt;">{{row.total}}</td>
+                               
                             </tr>
                         </tbody>
                     </table>

@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
   public tableData3 : TableData;
   spinnerbuy : boolean = false;
   spinnersell : boolean = false;
+  spinnerAnalyst:boolean=false;
   endGame:boolean=false;
   private currentUser : User = null;
   private rowData : Observable < Trend[] >;
@@ -59,15 +60,17 @@ export class HomeComponent implements OnInit {
         this.rowData2 = value.round.stocks;
         this.currentRound = value.currentRound;
         
+        this.spinnerAnalyst=true;
         this.rowData = this
           .analystServiceService
           .getAnalystData(this.currentUser, value.currentRound, JSON.parse(localStorage.getItem('userData')).gameId);
+          this.spinnerAnalyst=false;
       });
       
 
     this.tableData1 = {
       headerRow: [
-        'Action', 'Duration', 'Sector', 'Type'
+        'Action', 'Duration of Prediction', 'Sector', 'Type'
       ],
       dataRows: null
     };

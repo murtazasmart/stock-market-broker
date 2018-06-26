@@ -29,6 +29,7 @@ export class NavbarComponent implements OnInit {
   private sidebarVisible: boolean;
   private userList: User[];
   private currentUser: User;
+  private currWinner: any;
   private currentRound: number;
   private winner: Player;
   isEndgame: boolean = false;
@@ -43,6 +44,10 @@ export class NavbarComponent implements OnInit {
     private gameServiceService: GameServiceService,
     private aiBotService: AibotService
   ) {
+    const winner = JSON.parse(localStorage.getItem("winner"));
+    if (winner) {
+      this.currWinner = winner.playerName;
+    }
     this.userList = this.joinedDetailServiceService.getUsers();
     this.location = location;
     this.sidebarVisible = false;
@@ -72,13 +77,14 @@ export class NavbarComponent implements OnInit {
 
   public async nextTurn() {
     //when click on next for both AI and normal player
-    if (this.currentRound == 19) {
+    let _currentround:number=JSON.parse(localStorage.getItem("userData")).currentRound;
+    if (_currentround == 19) {
       this.router.navigate(["/finish"]);
       this.isEndgame = true;
     } else {
       let aiBotUserList = JSON.parse(localStorage.getItem("aiBots"));
-      
-      if (aiBotUserList==null) {
+
+      if (aiBotUserList == null) {
         this.simulatorServiceService.makeNextTurn();
         await this.gameServiceService.checkWinner();
       } else {
@@ -143,7 +149,6 @@ export class NavbarComponent implements OnInit {
 
   logOut() {
     this.joinService.endGame();
-
     this.joinedDetailServiceService.clearUserData();
 
     this.router.navigate(["/join"]);

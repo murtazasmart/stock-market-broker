@@ -19,6 +19,7 @@ import { TransactionsServiceService } from "../../services/transactions-service.
 import { User } from "../../models/user";
 import { Portfolio } from "../../models/porfolio";
 import { Users } from "../../models/users";
+import { LeaderboardService } from "../../services/leaderboard.service";
 import swal from "sweetalert2";
 
 declare interface TableData {
@@ -33,35 +34,60 @@ declare interface TableData {
 export class LeaderboardComponent implements OnInit {
   private rowData: Observable<Portfolio[]>;
   private rowData2: Observable<Users[]>;
-  private tableData1:TableData;
+  private tableData1: TableData;
+  private LeaderboardResult:any[]=[];
+  spinner: boolean = false;
   constructor(
     private joinedDetailServiceService: JoinedDetailServiceService,
     private brokerServiceService: BrokerServiceService,
     private simulatorServiceService: SimulatorServiceService,
     private gameServiceService: GameServiceService,
     private accountsService: AccountsService,
-    private joinServiceService: JoinServiceService
+    private joinServiceService: JoinServiceService,
+    private leaderboardService: LeaderboardService
   ) {
+    this.spinner=true;
+    this.leaderboardService.getData().then((users) => {
+      this.spinner=false;
+      console.log("herherher", users);
+      this.LeaderboardResult = users;
+      let winner = null;
+      users.forEach((user) => {
+        if (winner) {
+          if (user.total >= winner.total) {
+            winner = user;
+          }
+        } else {
+          winner = user;
+        }
+      });
+      console.log("winner is", winner);
+      localStorage.setItem('winner',JSON.stringify(winner));
+    }).catch((err) => {
+      this.spinner=false;
+      console.log(err);
+    })
     this.tableData1 = {
       headerRow: [
-        'Plaer/Bot Name', 'Bank Balance', 'Stock Portfolio Value', 'Total Valu'
+        "Plaer/Bot Name",
+        "Bank Balance",
+        "Stock Portfolio Value",
+        "Total Value"
       ],
       dataRows: null
     };
-
-    this.rowData2 = this.joinServiceService.getAllLoggedUsers();
-    this.rowData2.subscribe(res=>{
-      console.log("all logged users",res);
-      return 
-    });
-
-    this.rowData = this.brokerServiceService.getPortfolioValue(
-      JSON.parse(localStorage.getItem("users")).Name
-    );
-    this.rowData.subscribe(res => {
-      console.log("porfolio value", res);
-    });
   }
 
   ngOnInit() {}
+}
+
+class ServiceRequestor {
+  private row;
+  private joinService: JoinServiceService;
+  constructor(row, joinServiceService: JoinServiceService) {
+    this.row = row;
+    this.joinService = joinServiceService;
+  }
+
+  public call() {}
 }

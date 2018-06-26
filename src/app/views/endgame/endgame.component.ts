@@ -10,7 +10,7 @@ export class EndgameComponent implements OnInit {
   private FinalWinner:string;
   constructor() { 
     console.log("end game round",JSON.parse(localStorage.getItem('userData')).currentRound);
-    this.FinalWinner=JSON.parse(localStorage.getItem('currentWinner')).name;
+    this.FinalWinner=JSON.parse(localStorage.getItem('Winner')).playerName;
     
   }
 
