@@ -100,6 +100,7 @@ export class CpuComponent implements OnInit {
       await this.techCompanyParser();
       // console.log('sp' + JSON.stringify(this.companyWiseDataArrayList));
       this.dressData(this.companyWiseDataArrayList);
+      // await this.generatePredictions();
       await this.generatePredictions();
     } catch (error) {
       alert(error);
@@ -153,7 +154,7 @@ export class CpuComponent implements OnInit {
   }
 
   async getAcountBalance() {
-    let accountDetails = await this.cpuService.getAccountBalance();
+    let accountDetails = await this.cpuService.getAccountBalance(1001);
     localStorage.setItem('BOTaccountBalance', accountDetails.balace);
     let balancePercentage = (accountDetails.balace / 1000) * 100;
     let twentyPercent = (accountDetails.balace / 100) * 20
@@ -221,6 +222,7 @@ export class CpuComponent implements OnInit {
   }
 
   makeDecision() {
+    console.log('prediction array' + this.predictionArray);
     let highestPrice = 0;
     let company;
     this.predictionArray.forEach(element => {
