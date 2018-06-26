@@ -22,6 +22,7 @@ export class JoinServiceService {
       .get('https://stock-market-bank-service.herokuapp.com/bank/account')
       .subscribe(response => {
         const account: any = response.json();
+        console.log("all accounts",response.json());
         if (account != null) {
           this
             .http

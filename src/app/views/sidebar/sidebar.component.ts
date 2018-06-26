@@ -18,19 +18,19 @@ export const ROUTES : RouteInfo[] = [
    {
     path: 'shareprice',
     title: 'Transaction History',
-    icon: 'pe-7s-culture',
+    icon: 'pe-7s-cash',
     class: ''
   },
   {
     path: 'user',
     title: 'Stock Prices History',
-    icon: 'pe-7s-culture',
+    icon: 'pe-7s-config',
     class: ''
   },
   {
     path: 'leaderboard',
     title: 'Leader Board',
-    icon: 'pe-7s-culture',
+    icon: 'pe-7s-credit',
     class: ''
   }
   // { path: 'typography', title: 'Typography',  icon:'pe-7s-news-paper', class:
