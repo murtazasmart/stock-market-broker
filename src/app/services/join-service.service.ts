@@ -6,6 +6,7 @@ import { JoinedDetailServiceService } from './joined-detail-service.service'
 import { User } from '../models/user';
 import { Subscription, Observable } from 'rxjs';
 import { AIBot } from '../models/aibot';
+import {Users} from '../models/users';
 
 @Injectable()
 export class JoinServiceService {
@@ -123,5 +124,25 @@ export class JoinServiceService {
       })
 
   }
+
+  public getAllLoggedUsers() : Observable <Users[]> {
+    //console.log('success', history.name, history.turn, gameId);
+    console.log('https://stock-market-bank-service.herokuapp.com/bank/account');
+    return this
+      .http
+      .get('https://stock-market-bank-service.herokuapp.com/bank/account'
+      )
+      .map(res => {
+        const data = res.json();
+        console.log(data);
+        console.log('get all logged users');
+        return res
+          .json()
+          .map(item => {
+            return new Users(item.name);
+          });
+      });
+  }
+  
 
 }
