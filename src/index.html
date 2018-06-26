@@ -46,6 +46,7 @@
         // $(".result").html(sectorData);
         $.get("https://stock-market-simulator.herokuapp.com/api/v1/game/sectors?id=" + userData.gameId, function (sectors) {
             // $(".result").html(sectors);
+            var colors = ["#3e95cd", "#8e5ae2", "#3cba9f", "#e8c3b9", "#c45850"]
             console.log("alert", sectorData)
             var rounds;
             var chartDataSet = []
@@ -59,6 +60,8 @@
                     ydata.push(value);
                 });
                 dataset["data"] = ydata;
+                dataset["fill"] = false;
+                dataset["borderColor"] = colors.pop();
                 // dataset[backgroundColor] = 
                 chartDataSet.push(dataset);
             });
@@ -92,6 +95,8 @@
                 datasets: [{
                     label: "market",
                     data: dataset,
+                    fill: false,
+                    borderColor: "#3e95cd",
                 }],
             }
         });
