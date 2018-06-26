@@ -22,7 +22,6 @@ export class AnalystServiceService {
       //   gameId: String(gameId)
       // })
       .map(res => {
-        console.log('t2');
         return res
           .json()
           .map(item => {

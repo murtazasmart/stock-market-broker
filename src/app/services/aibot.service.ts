@@ -94,7 +94,6 @@ export class AibotService {
   async getCompanyWiseData(aiBot: AIBot) {
     try {
       await this.techCompanyParser();
-      // console.log('sp' + JSON.stringify(this.companyWiseDataArrayList));
       this.dressData(this.companyWiseDataArrayList);
       await this.generatePredictions(aiBot);
     } catch (error) {
@@ -108,12 +107,10 @@ export class AibotService {
       switch (element) {
         case '99X PLC':
           let predicted99X = this.performRegression99X();
-          // console.log('predicted' + JSON.stringify(predicted99X));
           const newOb99X = {
             companyName: element,
             prediction: predicted99X,
           }
-          // console.log('PRED ' + JSON.stringify(newOb99X));
           this.predictionArray.push(newOb99X);
           break;
         case 'Virtusa PLC':
@@ -122,7 +119,6 @@ export class AibotService {
             companyName: element,
             prediction: predictedVirtusa,
           }
-          // console.log('PRED ' + JSON.stringify(newObVirtusa));
           this.predictionArray.push(newObVirtusa);
           break;
         case 'WSO2 PLC':
@@ -131,7 +127,6 @@ export class AibotService {
             companyName: element,
             prediction: predictedWSO2,
           }
-          // console.log('PRED ' + JSON.stringify(newObWSO2));
           this.predictionArray.push(newObWSO2);
           break;
         case 'IFS PLC':
@@ -150,12 +145,10 @@ export class AibotService {
   }
 
   async getAcountBalance(aiBot: AIBot) {
-    // console.log('getBal' + JSON.stringify(aiBot));
     let accountDetails = await this.cpuService.getAccountBalance(aiBot.accountNumber);
     localStorage.setItem('BOTaccountBalance', accountDetails.balace);
     let balancePercentage = (accountDetails.balace / 1000) * 100;
     let twentyPercent = (accountDetails.balace / 100) * 20
-    console.log('twnty' + twentyPercent + 'balnce ' + accountDetails.balace);
     if (balancePercentage >= 20 && accountDetails.balace > 200) {
       this.investOn(aiBot, accountDetails.accountNumber, twentyPercent);
       console.log('AI BOT PLAYER INVESTS' + accountDetails.accountNumber);
@@ -231,7 +224,6 @@ export class AibotService {
   }
 
   makeDecision() {
-    console.log('decision making accessed' + JSON.stringify(this.predictionArray));
     let highestPrice = 0;
     let company;
     this.predictionArray.forEach(element => {
@@ -268,7 +260,6 @@ export class AibotService {
       })
       .subscribe(data => {
         console.log(data);
-        console.log('Success!', 'you have succefully bought!', 'success')
       });
   }
 
@@ -295,7 +286,6 @@ export class AibotService {
       })
       .subscribe(data => {
         console.log(data);
-        console.log('Success!', 'you have succefully sold!', 'success')
       });
   }
 
@@ -313,7 +303,6 @@ export class AibotService {
       }
       this.shareDetails.push(newOb);
     });
-    console.log('getShareDetails ' + JSON.stringify(this.shareDetails));
   }
 
 

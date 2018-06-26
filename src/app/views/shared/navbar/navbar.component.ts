@@ -62,14 +62,12 @@ export class NavbarComponent implements OnInit {
     // listen to user change
     this.joinedDetailServiceService.currentUser.subscribe(value => {
       this.currentUser = value;
-      console.log(value);
     });
   }
 
   private changeRound() {
     // when next turn clicked
     this.simulatorServiceService.userDetails.subscribe(value => {
-      console.log(value);
 
       this.currentRound = value.currentRound;
     });

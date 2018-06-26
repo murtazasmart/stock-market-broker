@@ -47,9 +47,7 @@ export class BrokerServiceService {
             x => x.stock === element.stock
           );
           let newData;
-          console.log(transactionsList.find(x => x.stock === element.stock));
           if (transactionsList.find(x => x.stock === element.stock)) {
-            console.log("inside");
             if (trans.type === "buy" && element.type === "buy") {
               element.quantity = element.quantity + trans.quantity;
               newData = element;
@@ -86,24 +84,14 @@ export class BrokerServiceService {
   ): Observable<Portfolio[]> {
     let apiUrl =
       "https://hidden-badlands-21838.herokuapp.com/api/transaction/value/portfolio/" +
-      user 
-     
-    console.log(
-      "https://hidden-badlands-21838.herokuapp.com/api/transaction/value/portfolio/" +
-        user 
-    );
+      user;
     return this.http.get(apiUrl).map(res => {
-      console.log(res.json());
-      console.log("price Vaiables6");
       const obj = res.json();
 
       let array1 = Object.keys(obj).map(function(k) {
         return obj[k];
       });
-      console.log("price Vaiables7");
-      console.log(array1);
       return array1.map((item) => {
-        console.log(item);
         return new Portfolio(item);
       });
     });

@@ -98,7 +98,6 @@ export class CpuComponent implements OnInit {
   async getCompanyWiseData() {
     try {
       await this.techCompanyParser();
-      // console.log('sp' + JSON.stringify(this.companyWiseDataArrayList));
       this.dressData(this.companyWiseDataArrayList);
       // await this.generatePredictions();
       await this.generatePredictions();
@@ -112,12 +111,10 @@ export class CpuComponent implements OnInit {
       switch (element) {
         case '99X PLC':
           let predicted99X = this.performRegression99X();
-          // console.log('predicted' + JSON.stringify(predicted99X));
           const newOb99X = {
             companyName: element,
             prediction: predicted99X,
           }
-          // console.log('PRED ' + JSON.stringify(newOb99X));
           this.predictionArray.push(newOb99X);
           break;
         case 'Virtusa PLC':
@@ -126,7 +123,6 @@ export class CpuComponent implements OnInit {
             companyName: element,
             prediction: predictedVirtusa,
           }
-          // console.log('PRED ' + JSON.stringify(newObVirtusa));
           this.predictionArray.push(newObVirtusa);
           break;
         case 'WSO2 PLC':
@@ -135,7 +131,6 @@ export class CpuComponent implements OnInit {
             companyName: element,
             prediction: predictedWSO2,
           }
-          // console.log('PRED ' + JSON.stringify(newObWSO2));
           this.predictionArray.push(newObWSO2);
           break;
         case 'IFS PLC':
@@ -222,7 +217,6 @@ export class CpuComponent implements OnInit {
   }
 
   makeDecision() {
-    console.log('prediction array' + this.predictionArray);
     let highestPrice = 0;
     let company;
     this.predictionArray.forEach(element => {
@@ -252,7 +246,6 @@ export class CpuComponent implements OnInit {
       })
       .subscribe(data => {
         console.log(data);
-        console.log('Success!', 'you have succefully bought!', 'success')
       });
   }
 
@@ -270,7 +263,6 @@ export class CpuComponent implements OnInit {
       })
       .subscribe(data => {
         console.log(data);
-        console.log('Success!', 'you have succefully bought!', 'success')
       });
   }
 
@@ -288,7 +280,6 @@ export class CpuComponent implements OnInit {
       }
       this.shareDetails.push(newOb);
     });
-    console.log('getShareDetails ' + JSON.stringify(this.shareDetails));
   }
 
 
