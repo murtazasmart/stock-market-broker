@@ -10,9 +10,9 @@ Stock market broker is the frontend angular app for the project. This will call 
 ### Members:
  - Murtaza Anverali Esufali 16211211
  - Maheshi K.H.Gunaratne    16211197
- - Bhagya
- - Mekala
- - Kasun
+ - Rathnayake Bhagya P M    16211279
+ - Mekala Rashmika K B      16211194
+ - M.Kasun lalendra Silva   16211181
 
 | Repository Name        | Github Link           | Live URL  |
 | ------------- |-------------| -----|
