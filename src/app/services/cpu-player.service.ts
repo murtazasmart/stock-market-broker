@@ -14,8 +14,9 @@ export class CpuPlayerService {
   }
 
   public getData() {
+    const gameId = JSON.parse(localStorage.getItem('userData')).gameId;
     return this.http
-      .get('https://stock-market-simulator.herokuapp.com/api/v1/game/stock/details?id=5b2f42ae0272d00030623f97')
+      .get('https://stock-market-simulator.herokuapp.com/api/v1/game/stock/details?id='+gameId)
       .toPromise().then((res) => {
         console.log(res.json());
         return res.json();
@@ -27,9 +28,10 @@ export class CpuPlayerService {
 
   public getCompanyWiseHistory(companyName) {
     let ParentArray2 = [];
+    const gameId = JSON.parse(localStorage.getItem('userData')).gameId;
     return this
       .http
-      .get('https://stock-market-simulator.herokuapp.com/api/v1/game/stock/history?id=5b2f42ae0272d00030623f97&stockName=' + companyName)
+      .get('https://stock-market-simulator.herokuapp.com/api/v1/game/stock/history?id='+gameId+'&stockName=' + companyName)
       .toPromise().then((res) => {
         let jsonArray = res.json();
         for (var i in jsonArray) {
