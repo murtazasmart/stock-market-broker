@@ -43,7 +43,7 @@
 
                         <li class="dropdown">
                             Please refresh web browser(F5) to update charts
-                            <p style="font-size: 16pt;top:5px; color: #484848;">Select the Sector Name</p>
+                            <p style="font-size: 16pt;top:5px; color: #484848;">Select the Sector Name (Average Sector Prices)</p>
                             <div class="selectcompany">
                                 <p class="category" style="color: #484848;font-size: 12pt;">Selected Sector: </p>
                                 <p style="color:#F94C4C;font-size: 12pt;"> {{currentSector}}</p>
@@ -74,17 +74,90 @@
                 </div>
 
             </div>
-            <div class="row">
+            <div class="col-md-6">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th *ngFor="let cell of tableData1.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
+                        </tr>
+                    </thead>
+                    <tbody style="height:100px; overflow:scroll;">
+                        <tr *ngFor="let row of priceData | async">
+                            <td style="color:#44c5ac">{{row.round}}</td>
+                            <td>{{row.price}}</td>
 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th *ngFor="let cell of tableData2.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
+                        </tr>
+                    </thead>
+                    <tbody style="height:100px; overflow:scroll;">
+                        <tr *ngFor="let row of sectorpriceData | async">
+                            <td style="color:#44c5ac">{{row.round}}</td>
+                            <td>{{row.price}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr class="colored">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="col-md-6">
+                    <ul class="nav navbar-nav navbar-left">
+
+
+                        <li class="dropdown">
+                            <p style="font-size: 16pt;top:5px; color: #484848;">Select the Stock Name</p>
+                            <div class="selectcompany">
+                                <p class="category" style="color: #484848;font-size: 12pt;">Selected Company: </p>
+                                <p style="color:#F94C4C;font-size: 12pt;"> {{currentCompany}}</p>
+                            </div>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                                <i class="fa fa-home" style="font-size: 20pt;top:7px;"></i>
+                                <b class="caret"></b>
+                                <span class="notification">{{rowData.length}}</span>
+                                <p class="hidden-lg hidden-md">
+                                    {{rowData.length}} companies
+                                    <b class="caret"></b>
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li *ngFor="let row of rowData">
+                                    <a (click)="changeCurrentCompanyForStock(row)">{{row.company}}</a>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+                <div class="col-md-6">
+                    <p style="font-size: 16pt;top:5px; color: #484848;">Average Stock Prices</p>
+                    <div class="selectcompany">
+                        <p class="category" style="color: #484848;font-size: 12pt;">Selected Company: </p>
+                        <p style="color:#F94C4C;font-size: 12pt;"> {{currentCompany}}</p>
+                    </div>
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th *ngFor="let cell of tableData1.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
+                                <th *ngFor="let cell of tableData2.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
                             </tr>
                         </thead>
                         <tbody style="height:100px; overflow:scroll;">
-                            <tr *ngFor="let row of priceData | async">
+                            <tr *ngFor="let row of stockData | async">
                                 <td style="color:#44c5ac">{{row.round}}</td>
                                 <td>{{row.price}}</td>
 
@@ -92,35 +165,18 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-6">
-                    <!-- <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th *ngFor="let cell of tableData1.headerRow" style="font-weight: bold;color: #484848;font-size: 10pt;">{{ cell }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody style="height:100px; overflow:scroll;">
-                                    <tr *ngFor="let row of sectorpriceData | async">
-                                        <td style="color:#44c5ac">{{row.round}}</td>
-                                        <td>{{row.price}}</td>
-            
-                                    </tr>
-                                </tbody>
-                            </table> -->
-                    <div>
-                        <div>
-                            <canvas id="sectorChart"></canvas>
-                        </div>
-                    </div>
-                </div>
+
             </div>
-            <div class="col-md-12">
-                <div>
-                    <div>
-                        <canvas id="marketChart"></canvas>
-                    </div>
-                </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <canvas id="sectorChart"></canvas>
             </div>
+            <div class="col-md-6">
+                <canvas id="marketChart"></canvas>
+            </div>
+
         </div>
     </div>
 </div>

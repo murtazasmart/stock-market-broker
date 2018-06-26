@@ -34,6 +34,8 @@ import { CpuComponent } from './cpu/cpu.component'
 import { CpuPlayerService } from './services/cpu-player.service';
 import { AccountsService } from "./services/accounts.service";
 import { EndgameComponent } from './views/endgame/endgame.component';
+import { AibotService } from './services/aibot.service';
+import { LeaderboardComponent } from './views/leaderboard/leaderboard.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +50,8 @@ import { EndgameComponent } from './views/endgame/endgame.component';
     SharepriceComponent,
     SpinnerComponent,
     CpuComponent,
-    EndgameComponent
+    EndgameComponent,
+    LeaderboardComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +75,7 @@ import { EndgameComponent } from './views/endgame/endgame.component';
     CpuPlayerService,
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     AccountsService,
+    AibotService,
   ],
   bootstrap: [AppComponent]
 })

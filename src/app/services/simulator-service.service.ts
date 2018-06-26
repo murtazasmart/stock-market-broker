@@ -6,6 +6,7 @@ import { User } from "../models/user";
 import { Price } from "../models/price";
 import { Sector } from "../models/sector";
 import { SectorPrice } from "../models/sectorprice";
+import { StockPrice } from "../models/stockprice";
 @Injectable()
 export class SimulatorServiceService {
   currentCompany: Observable<Stock>;
@@ -36,15 +37,15 @@ export class SimulatorServiceService {
     console.log(dataArray);
     return dataArray;
   }
-  public getSectorNames(gameId: string):Observable<Sector[]> {
+  public getSectorNames(gameId: string): Observable<Sector[]> {
     let _apiUrl =
       "https://stock-market-simulator.herokuapp.com/api/v1/game/sectors?id=" +
       gameId;
-      return this.http.get(_apiUrl).map(res => {
+    return this.http.get(_apiUrl).map(res => {
       /*const sectors=res.json() as Sector[];
       console.log("answer", this.apps);
       return sectors;*/
-      return res.json().map(res=>{
+      return res.json().map(res => {
         return new Sector(res);
       });
     });
@@ -123,7 +124,38 @@ export class SimulatorServiceService {
       });
     });
   }
+  public getStockPriceVariable(
+    gameId: string,
+    stockName: string
+  ): Observable<StockPrice[]> {
+    let apiUrl =
+      "https://stock-market-simulator.herokuapp.com/api/v1/game/market/history?id=" +
+      gameId +
+      "&stockName=" +
+      stockName;
+    console.log(
+      "https://stock-market-simulator.herokuapp.com/api/v1/game/market/history?id=" +
+        gameId +
+        "&stockName=" +
+        stockName
+    );
+    return this.http.get(apiUrl).map(res => {
+      console.log(res.json());
+      console.log("price Vaiables4");
+      const obj = res.json();
 
+      let array1 = Object.keys(obj).map(function(k) {
+        return obj[k];
+      });
+      console.log("price Vaiables5");
+      console.log(array1);
+      return array1.map((item, index) => {
+        console.log(item);
+        console.log(index);
+        return new StockPrice(index, item);
+      });
+    });
+  }
   public makeNextTurn(): Subscription {
     console.log(JSON.parse(localStorage.getItem("userData")).gameId);
     return this.http

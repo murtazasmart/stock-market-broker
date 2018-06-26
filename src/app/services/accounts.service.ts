@@ -4,6 +4,7 @@ import {Subscription, Observable} from 'rxjs';
 import {User} from '../models/user';
 import {History} from '../models/history';
 import 'rxjs/add/operator/map';
+import { CpuPlayerService } from './cpu-player.service';
 @Injectable()
 export class AccountsService {
 

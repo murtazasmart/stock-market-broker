@@ -12,6 +12,8 @@ import { User } from "../../../models/user";
 import { SimulatorServiceService } from "../../../services/simulator-service.service";
 import { GameServiceService } from "../../../services/game-service.service";
 import { Player } from "../../../models/player";
+import { AIBot } from "../../../models/aibot";
+import { AibotService } from "../../../services/aibot.service";
 
 @Component({
   // moduleId: module.id,
@@ -22,6 +24,7 @@ import { Player } from "../../../models/player";
 export class NavbarComponent implements OnInit {
   private listTitles: any[];
   location: Location;
+  spinner:boolean=false;
   private toggleButton: any;
   private sidebarVisible: boolean;
   private userList: User[];
@@ -37,7 +40,8 @@ export class NavbarComponent implements OnInit {
     private joinService: JoinServiceService,
     private joinedDetailServiceService: JoinedDetailServiceService,
     private simulatorServiceService: SimulatorServiceService,
-    private gameServiceService: GameServiceService
+    private gameServiceService: GameServiceService,
+    private aiBotService: AibotService,
   ) {
     this.userList = this.joinedDetailServiceService.getUsers();
     this.location = location;
@@ -72,6 +76,8 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(["/finish"]);
       this.isEndgame=true;
     } else {
+      let aiBotUserList = JSON.parse(localStorage.getItem("aiBots"));
+      await this.aiBotService.runBotMoves(aiBotUserList);
       this.simulatorServiceService.makeNextTurn();
       await this.gameServiceService.checkWinner();
       this.changeRound();

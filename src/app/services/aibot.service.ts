@@ -1,24 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { SLR } from 'ml-regression';
-import { Http, Response } from '@angular/http';
-import { CpuPlayerService } from '../services/cpu-player.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from "rxjs/Observable";
-import { TransactionsServiceService } from '../services/transactions-service.service';
-import { BrokerServiceService } from '../services/broker-service.service';
-import { AccountsService } from '../services/accounts.service';
+import { BrokerServiceService } from './broker-service.service';
+import { TransactionsServiceService } from './transactions-service.service';
+import { CpuPlayerService } from './cpu-player.service';
+import { Http } from '@angular/http';
+import { AIBot } from '../models/aibot';
 
+@Injectable()
+export class AibotService {
 
-@Component({
-  selector: 'app-cpu',
-  templateUrl: './cpu.component.html',
-  styleUrls: ['./cpu.component.scss']
-})
-export class CpuComponent implements OnInit {
-
-  // private csvFilePath = "Advertising.csv";
-  // private ml = require('ml-regression');
-  // private csv;
   private SAMPLARR = [];
   private prices99X = [];
   private pricesVirtusa = [];
@@ -56,18 +46,24 @@ export class CpuComponent implements OnInit {
   private lastRound: number = 0;
   private companyWiseDataArrayList = [];
   private shareDetails = [];
-
-  constructor(private route: ActivatedRoute,
-    private router: Router,
+  private aiBots: AIBot[];
+  spinnerstart: boolean = false;
+  constructor(
     private http: Http,
     private cpuService: CpuPlayerService,
     private transactionsServiceService: TransactionsServiceService,
-    private brokerServiceService: BrokerServiceService) {
-    this.getSectorWiseData();
+    private brokerServiceService: BrokerServiceService) { }
 
+  public runBotMoves(aiBots: AIBot[]) {
+    console.log(aiBots);
+    this.aiBots = aiBots;
+    this.spinnerstart = true;
+    aiBots.forEach(async (aiBot) => {
+      await this.getSectorWiseData(aiBot);
+    });
   }
 
-  async getSectorWiseData() {
+  async getSectorWiseData(aiBot: AIBot) {
 
     let sectorData = await this.cpuService.getData();
     try {
@@ -79,7 +75,7 @@ export class CpuComponent implements OnInit {
         this.bizCompanyArray.push(element);
       });
 
-      this.getCompanyWiseData();
+      this.getCompanyWiseData(aiBot);
     } catch (error) {
       alert(error);
     }
@@ -95,18 +91,19 @@ export class CpuComponent implements OnInit {
     }
   }
 
-  async getCompanyWiseData() {
+  async getCompanyWiseData(aiBot: AIBot) {
     try {
       await this.techCompanyParser();
       // console.log('sp' + JSON.stringify(this.companyWiseDataArrayList));
       this.dressData(this.companyWiseDataArrayList);
-      await this.generatePredictions();
+      await this.generatePredictions(aiBot);
     } catch (error) {
+      console.log(error);
       alert(error);
     }
   }
 
-  generatePredictions() {
+  generatePredictions(aiBot: AIBot) {
     this.techCompanyArray.forEach(element => {
       switch (element) {
         case '99X PLC':
@@ -149,18 +146,20 @@ export class CpuComponent implements OnInit {
     });
     let decision = this.makeDecision();
     localStorage.setItem('prediction', decision);
-    this.getAcountBalance();
+    this.getAcountBalance(aiBot);
   }
 
-  async getAcountBalance() {
+  async getAcountBalance(aiBot: AIBot) {
     let accountDetails = await this.cpuService.getAccountBalance();
     localStorage.setItem('BOTaccountBalance', accountDetails.balace);
     let balancePercentage = (accountDetails.balace / 1000) * 100;
     let twentyPercent = (accountDetails.balace / 100) * 20
     if (balancePercentage >= 20 && accountDetails.balace > 200) {
-      this.investOn(accountDetails.accountNumber, twentyPercent);
+      this.investOn(aiBot, accountDetails.accountNumber, twentyPercent);
+      console.log('AI BOT PLAYER INVESTS');
     } else {
-      this.sellShares(accountDetails.accountNumber);
+      this.sellShares(aiBot, accountDetails.accountNumber, twentyPercent);
+      console.log('AI BOT PLAYER SELLS');
     }
   }
 
@@ -233,12 +232,16 @@ export class CpuComponent implements OnInit {
     return company;
   }
 
-  investOn(accountNumber, investment) {
+  investOn(aiBot: AIBot, accountNumber, investment) {
     let companyName = localStorage.getItem('prediction');
+    const gameId = JSON.parse(localStorage.getItem('userData')).gameId;
+    const currentRound = JSON.parse(localStorage.getItem('userData')).currentRound;
     let accountBalance = localStorage.getItem('BOTaccountBalance');
     let stockPrice = localStorage.getItem('predictedPrice');
     let qty = investment / Number(stockPrice);
-    let purchaseValue = Number(stockPrice) * qty;
+    let formatterdQty = Math.floor(qty);
+    let purchaseValue = Number(stockPrice) * formatterdQty;
+    console.log('AI BOT IS BUYING ' + purchaseValue + ' QTY ' + Math.floor(qty) + ' ');
     this.getShareDetails();
     this
       .transactionsServiceService
@@ -246,7 +249,7 @@ export class CpuComponent implements OnInit {
       .flatMap(response => {
         return this
           .brokerServiceService
-          .bTransaction('CPU', companyName, 30, 'buy', 105, '', 5);
+          .bTransaction(aiBot.Name, companyName, qty, 'buy', Number(stockPrice), gameId, currentRound);
       })
       .subscribe(data => {
         console.log(data);
@@ -254,21 +257,30 @@ export class CpuComponent implements OnInit {
       });
   }
 
-  sellShares(accountNumber) {
+  sellShares(aiBot: AIBot, accountNumber, investment) {
     let companyName = localStorage.getItem('prediction');
+    const gameId = JSON.parse(localStorage.getItem('userData')).gameId;
+    const currentRound = JSON.parse(localStorage.getItem('userData')).currentRound;
     let accountBalance = localStorage.getItem('BOTaccountBalance');
+    let stockPrice = localStorage.getItem('predictedPrice');
+    let qty = investment / Number(stockPrice);
+    let formatterdQty = Math.floor(qty);
+    let purchaseValue = Number(stockPrice) * formatterdQty;
+
+    console.log('AI BOT IS SELLING ' + purchaseValue + ' QTY ' + Math.floor(qty) + ' ');
+
     this.getShareDetails();
     this
       .transactionsServiceService
-      .transaction('credit', '3500', accountNumber, 'buying')
+      .transaction('credit', String(purchaseValue), accountNumber, 'selling')
       .flatMap(response => {
         return this
           .brokerServiceService
-          .bTransaction('CPU', companyName, 30, 'sell', 105, '', 5);
+          .bTransaction(aiBot.Name, companyName, qty, 'sell', Number(stockPrice), gameId, currentRound);
       })
       .subscribe(data => {
         console.log(data);
-        console.log('Success!', 'you have succefully bought!', 'success')
+        console.log('Success!', 'you have succefully sold!', 'success')
       });
   }
 
@@ -297,5 +309,6 @@ export class CpuComponent implements OnInit {
   ngOnInit() {
 
   }
+
 
 }
