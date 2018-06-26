@@ -61,6 +61,9 @@ export class JoinServiceService {
       .subscribe(response => {
         // after game is reset
         const responseStart: any = response.json();
+        this.http.get("https://hidden-badlands-21838.herokuapp.com/api/transaction/delete/all").subscribe(response=>{
+          const res:any=response.json();
+        });
         console.log('startGame', responseStart);
       })
 
@@ -125,23 +128,32 @@ export class JoinServiceService {
 
   }
 
-  public getAllLoggedUsers() : Observable <Users[]> {
+  public getAllLoggedUsers() : Promise<Users[]> {
     //console.log('success', history.name, history.turn, gameId);
     console.log('https://stock-market-bank-service.herokuapp.com/bank/account');
     return this
       .http
       .get('https://stock-market-bank-service.herokuapp.com/bank/account'
-      )
-      .map(res => {
+      ).toPromise().then((res) => {
         const data = res.json();
         console.log(data);
         console.log('get all logged users');
         return res
           .json()
           .map(item => {
-            return new Users(item.name);
+            return new Users(item.name,item.accountNumber);
           });
-      });
+      })
+      // .map(res => {
+      //   const data = res.json();
+      //   console.log(data);
+      //   console.log('get all logged users');
+      //   return res
+      //     .json()
+      //     .map(item => {
+      //       return new Users(item.name,item.accountNumber);
+      //     });
+      // });
   }
   
 
